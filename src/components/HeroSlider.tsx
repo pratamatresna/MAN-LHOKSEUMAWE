@@ -17,21 +17,21 @@ export default function HeroSlider({ setTab }: HeroSliderProps) {
     {
       title: 'Selamat Datang di MAN Kota Lhokseumawe',
       subtitle: 'Membentuk Generasi Robbani yang Unggul dalam Sains, Kokoh dalam Imtaq, dan Berkarakter Qur’ani.',
-      bgUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1600&q=80',
+      bgUrl: '/images/hero1.jpg',
       cta1: { label: 'PPDB Online 2026', tab: 'ppdb', sub: 'ppdb-daftar' },
       cta2: { label: 'E-Learning Siswa', tab: 'portal', sub: '' }
     },
     {
       title: 'Madrasah Unggulan Sains & Riset Teknologi',
       subtitle: 'Membuka wawasan masa depan dengan laboratorium cerdas, pembelajaran sains empiris, dan riset robotika inovatif.',
-      bgUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=80',
+      bgUrl: '/images/hero2.png',
       cta1: { label: 'Profil Akademik', tab: 'profil', sub: 'akreditasi' },
       cta2: { label: 'Silabus & Download', tab: 'publikasi', sub: 'download-area' }
     },
     {
       title: 'Program Unggulan Tahfidz & Kajian Turats',
       subtitle: 'Membina hafalan Al-Qur\'an intensif bersanad serta penguasaan kitab kuning guna melahirkan ulama masa depan.',
-      bgUrl: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=1600&q=80',
+      bgUrl: '/images/hero3.jpg',
       cta1: { label: 'Kegiatan Tahfidz', tab: 'akademik', sub: 'ekstra' },
       cta2: { label: 'Hubungi Keagamaan', tab: 'kontak', sub: 'hubungi' }
     }
@@ -63,7 +63,7 @@ export default function HeroSlider({ setTab }: HeroSliderProps) {
           }`}
         >
           {/* Cover Overlay with neutral dark gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-[#1c2b46]/70 to-transparent z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-900/20 to-transparent z-10" />
           <img
             src={slide.bgUrl}
             alt={slide.title}
@@ -80,7 +80,7 @@ export default function HeroSlider({ setTab }: HeroSliderProps) {
               <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight tracking-tight drop-shadow uppercase">
                 {slide.title}
               </h2>
-              <p className="text-sm sm:text-lg text-slate-205 leading-relaxed font-sans font-light max-w-2xl">
+              <p className="text-sm sm:text-lg text-white leading-relaxed font-sans font-medium max-w-2xl drop-shadow-md">
                 {slide.subtitle}
               </p>
               

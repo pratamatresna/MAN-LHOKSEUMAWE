@@ -34,7 +34,7 @@ export default function Footer({ setTab }: FooterProps) {
           </p>
           <div className="flex space-x-3 pt-2">
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/manism.official" 
               target="_blank" 
               rel="noreferrer" 
               referrerPolicy="no-referrer"
@@ -43,7 +43,7 @@ export default function Footer({ setTab }: FooterProps) {
               <Instagram size={18} />
             </a>
             <a 
-              href="https://facebook.com" 
+              href="https://www.facebook.com/profile.php?id=61578272017015" 
               target="_blank" 
               rel="noreferrer" 
               referrerPolicy="no-referrer"
@@ -52,7 +52,7 @@ export default function Footer({ setTab }: FooterProps) {
               <Facebook size={18} />
             </a>
             <a 
-              href="https://youtube.com" 
+              href="https://www.youtube.com/@manism.official" 
               target="_blank" 
               rel="noreferrer" 
               referrerPolicy="no-referrer"
@@ -114,19 +114,18 @@ export default function Footer({ setTab }: FooterProps) {
             </div>
             <div className="flex items-center space-x-2.5">
               <Phone className="w-4 h-4 text-brand-gold shrink-0" />
-              <span>+62 (0645) 43212</span>
+              <span>085262820401</span>
             </div>
             <div className="flex items-center space-x-2.5">
               <Mail className="w-4 h-4 text-brand-gold shrink-0" />
-              <span>info@manlhokseumawe.sch.id</span>
+              <span>manlism@yahoo.co.id</span>
             </div>
             <div className="flex items-start space-x-2.5 pt-2">
               <Clock className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
               <div>
                 <p className="font-bold text-slate-200">Jam Operasional:</p>
-                <p className="mt-1">Senin - Kamis: 07:30 - 16:00 WIB</p>
-                <p>Jumat: 07:30 - 11:30 WIB</p>
-                <p>Sabtu: 07:30 - 13:00 WIB</p>
+                <p className="mt-1">Senin - Kamis & Sabtu: 07.30 - 14.30 WIB</p>
+                <p>Jumat: 07.30 - 11.30 WIB</p>
               </div>
             </div>
           </div>

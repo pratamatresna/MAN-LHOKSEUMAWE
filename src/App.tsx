@@ -99,14 +99,14 @@ function HomepageLayout({ setTab, news, agendas }: HomepageProps) {
           <div className="lg:col-span-4 flex flex-col items-center text-center space-y-3.5">
             <div className={`w-56 h-56 rounded-full overflow-hidden border-4 border-brand-gold shadow-lg transform hover:rotate-3 transition-all duration-300 ${theme === 'dark' ? 'bg-slate-850' : 'bg-white'}`}>
               <img 
-                src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=400&q=80" 
+                src="/images/kepsek.jpg"
                 alt="Kepala Madrasah MAN Kota Lhokseumawe"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
             </div>
             <div>
-              <h4 className={`font-display font-extrabold text-sm uppercase mt-1 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>H. Sulaidi, M.A.</h4>
+              <h4 className={`font-display font-extrabold text-sm uppercase mt-1 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>Suriya, S. Ag., M.Pd</h4>
               <p className="text-[10px] font-mono font-bold text-brand-gold-dark uppercase tracking-widest mt-0.5">Kepala Madrasah Aliyah</p>
             </div>
           </div>

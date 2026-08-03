@@ -17,48 +17,88 @@ interface AcademicViewsProps {
 
 export default function AcademicViews({ subTab }: AcademicViewsProps) {
   const { agendas } = useSchool();
-  const [activeEkskul, setActiveEkskul] = useState('osim');
+  const [activeEkskul, setActiveEkskul] = useState('pramuka');
 
   const ekskulList = [
     {
-      id: 'osim',
-      name: 'OSIM (Organisasi Siswa Intra Madrasah)',
-      desc: 'Wadah kepemimpinan primer siswa untuk menyalurkan kreativitas, mengelola event, menggalang aksi sosial, dan melatih kapasitas berorganisasi siswa.',
-      img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80',
-      schedule: 'Sabtu, 14:00 - 16:30 WIB',
-       pembimbing: 'Dra. Hj. Cut Nyak Fatimah'
-    },
-    {
-      id: 'tahfidz',
-      name: 'Tahfidzul Qur’an Intensif',
-      desc: 'Program bimbingan halaqah hafalan Al-Qur\'an didesain secara adaptif dengan target kompetensi kelulusan minimal hafal 5 Juz (Juz 30, 1 s.d. 4) bersertifikat Resmi.',
-      img: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=600&q=80',
-      schedule: 'Setiap Subuh & sore bada Ashar',
-      pembimbing: 'Ustadz Muzakir, Lc'
-    },
-    {
       id: 'pramuka',
-      name: 'Pramuka Gudep 04-05',
+      name: 'Pramuka',
       desc: 'Gerakan kepanduan guna membentuk pribadi siswa mandiri, tangguh, peduli sosial, serta berjiwa patriotik yang menjunjung tinggi Pancasila.',
       img: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=600&q=80',
-      schedule: 'Jumat Sore, 14:30 - 17:00 WIB',
-      pembimbing: 'Harun Al-Rasyid, S.Pd'
+      schedule: 'Jumat Sore',
+      pembimbing: 'Pembina Pramuka'
+    },
+    {
+      id: 'pmr',
+      name: 'Palang Merah Remaja (PMR)',
+      desc: 'Wadah pembinaan generasi muda agar memiliki kepedulian sosial, tanggap darurat, dan keterampilan pertolongan pertama pada kecelakaan.',
+      img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80',
+      schedule: 'Sabtu Sore',
+      pembimbing: 'Pembina PMR'
+    },
+    {
+      id: 'karim',
+      name: 'KARIM / ROHIS',
+      desc: 'Kajian Remaja Islam Madrasah / Rohani Islam untuk memperdalam wawasan keagamaan, akhlak mulia, dan silaturahmi antar siswa.',
+      img: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=600&q=80',
+      schedule: 'Jumat Pagi / Sore',
+      pembimbing: 'Pembina ROHIS'
+    },
+    {
+      id: 'jurnalistik',
+      name: 'Jurnalistik',
+      desc: 'Ekstrakurikuler yang mewadahi bakat menulis, peliputan berita, desain grafis, dan kemampuan broadcasting di madrasah.',
+      img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80',
+      schedule: 'Kamis Sore',
+      pembimbing: 'Pembina Jurnalistik'
+    },
+    {
+      id: 'volleyball',
+      name: 'Volley Ball',
+      desc: 'Pengembangan bakat di bidang olahraga bola voli untuk meningkatkan kebugaran jasmani, sportivitas, dan prestasi perlombaan.',
+      img: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=600&q=80',
+      schedule: 'Selasa & Kamis Sore',
+      pembimbing: 'Guru Olahraga'
+    },
+    {
+      id: 'futsal',
+      name: 'Futsal',
+      desc: 'Latihan rutin futsal bagi siswa untuk melatih ketangkasan, kerja sama tim, stamina, serta persiapan mengikuti kejuaraan antar sekolah.',
+      img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80',
+      schedule: 'Rabu Sore',
+      pembimbing: 'Guru Olahraga'
+    },
+    {
+      id: 'panahan',
+      name: 'Panahan',
+      desc: 'Olahraga sunnah yang melatih konsentrasi, ketenangan, disiplin diri, serta kekuatan fisik yang sangat digemari siswa madrasah.',
+      img: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=600&q=80',
+      schedule: 'Sabtu Pagi',
+      pembimbing: 'Pelatih Panahan'
     },
     {
       id: 'paskibra',
-      name: 'Paskibraka Madrasah',
-      desc: 'Pelatihan fisik dan mental dalam penempaan formasi baris-berbaris tertib. Berperan aktif sebagai regu upacara utama hari kesaktian nasional.',
+      name: 'Paskibra',
+      desc: 'Pasukan Pengibar Bendera yang melatih kedisiplinan, baris-berbaris, kepemimpinan, dan kesiapan bertugas di upacara hari besar nasional.',
       img: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=600&q=80',
-      schedule: 'Sabtu Pagi, 08:00 - 11:30 WIB',
-      pembimbing: 'Irwan Dani, S.T'
+      schedule: 'Sabtu Pagi / Sore',
+      pembimbing: 'Pembina Paskibra'
     },
     {
-      id: 'kaligrafi',
-      name: 'Seni Kaligrafi Islam',
-      desc: 'Pengembangan seni khath dan lukis islami (Tsulust, Naskhi, Diwani). Pembinaan bibit-bibit berbakat guna delegasi MTQ tingkat Kabupaten/Kota.',
+      id: 'englishclub',
+      name: 'English Club',
+      desc: 'Wadah bagi siswa untuk meningkatkan kemampuan berbahasa Inggris, debat, story telling, dan public speaking.',
+      img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80',
+      schedule: 'Jumat Sore',
+      pembimbing: 'Guru Bahasa Inggris'
+    },
+    {
+      id: 'kesenian',
+      name: 'Kesenian',
+      desc: 'Ekskul seni untuk menyalurkan bakat kreatif siswa dalam bidang seni rupa, seni musik islami (hadroh/marawis), kaligrafi, dan teater.',
       img: 'https://images.unsplash.com/photo-1503945439643-a6590c8e00d5?auto=format&fit=crop&w=600&q=80',
-      schedule: 'Kamis Sore, 16:00 - 17:30 WIB',
-      pembimbing: 'Mariani, S.Ag'
+      schedule: 'Kamis Sore',
+      pembimbing: 'Guru Kesenian'
     }
   ];
 

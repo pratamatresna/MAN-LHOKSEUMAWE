@@ -117,15 +117,15 @@ export default function Navbar({ currentTab, setTab, subTab }: NavbarProps) {
         <div className="flex items-center space-x-4">
           <span className="flex items-center gap-1.5 font-semibold">
             <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
-            MAN Kota Lhokseumawe • Madrasah Unggulan Nasional
+            MAN Kota Lhokseumawe • Madrasah Unggulan Riset Inovasi Digital
           </span>
         </div>
         <div className="flex items-center space-x-4 text-slate-100">
           <span className="hover:underline flex items-center gap-1 cursor-pointer">
-            <Phone size={12} className="text-brand-gold" /> +62 (0645) 43212
+            <Phone size={12} className="text-brand-gold" /> 085262820401
           </span>
           <span className="opacity-40">|</span>
-          <span className="font-display font-semibold italic text-brand-gold">Unggul, Islami & Saintifik</span>
+          <span className="font-display font-semibold italic text-brand-gold">Unggul dalam prestasi berdasarkan nilai-nilai Islam</span>
         </div>
       </div>
 
@@ -134,19 +134,18 @@ export default function Navbar({ currentTab, setTab, subTab }: NavbarProps) {
         {/* LOGO AND BRANDING */}
         <div 
           onClick={() => handleNavClick('home')}
-          className="flex items-center space-x-3 cursor-pointer group"
+          className="flex items-center space-x-3 cursor-pointer group shrink-0 lg:mr-8"
           id="nav-logo-group"
         >
-          <div className="w-11 h-11 rounded-full bg-brand-gold flex items-center justify-center text-brand-green shadow-md transform group-hover:scale-105 transition-all">
-            <GraduationCap className="w-6 h-6 text-white" />
-          </div>
+          <img 
+            src="/images/logo1.png" 
+            alt="Logo MAN Kota Lhokseumawe" 
+            className="w-12 h-12 object-contain transform group-hover:scale-105 transition-all"
+          />
           <div>
-            <h1 className={`text-lg font-display font-black leading-none tracking-tight ${theme === 'dark' ? 'text-brand-gold' : 'text-brand-green'}`}>
+            <h1 className={`text-base font-display font-black leading-none tracking-tight ${theme === 'dark' ? 'text-brand-gold' : 'text-brand-green'}`}>
               MAN KOTA LHOKSEUMAWE
             </h1>
-            <p className={`text-[10px] uppercase tracking-widest font-semibold mt-0.5 ${theme === 'dark' ? 'text-slate-400' : 'text-[#666666]'}`}>
-              Madrasah Aliyah Negeri • Unggul & Islami
-            </p>
           </div>
         </div>
 

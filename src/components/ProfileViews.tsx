@@ -61,17 +61,17 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
             <div className="lg:col-span-1 text-center">
               <div className="relative inline-block rounded-2xl overflow-hidden border-4 border-brand-green shadow-xl max-w-xs mx-auto">
                 <img 
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" 
-                  alt="Drs. H. Sofyan, M.Pd"
+                  src="/images/kepsek.jpg"
+                  alt="Suriya, S. Ag., M.Pd"
                   className="w-full h-auto object-cover"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
-                  <p className="font-display font-bold text-sm">Drs. H. Sofyan, M.Pd</p>
+                  <p className="font-display font-bold text-sm">Suriya, S. Ag., M.Pd</p>
                   <p className="text-[10px] text-brand-gold font-mono uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
                 </div>
               </div>
-              <p className="text-xs font-mono text-slate-500 mt-4 leading-relaxed">NIP. 196901121995031002</p>
+              <p className="text-xs font-mono text-slate-500 mt-4 leading-relaxed">&nbsp;</p>
             </div>
             
             <div className="lg:col-span-2 space-y-5">
@@ -105,7 +105,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
               <div className="border-t pt-5 mt-6 flex justify-between items-center flex-wrap">
                 <div>
                   <p className="text-xs text-slate-500 font-medium">Tertanda,</p>
-                  <p className="font-display font-extrabold text-slate-900 mt-1">Drs. H. Sofyan, M.Pd</p>
+                  <p className="font-display font-extrabold text-slate-900 mt-1">Suriya, S. Ag., M.Pd</p>
                   <p className="text-xs text-brand-green font-mono font-bold uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
                 </div>
                 <div className="w-24 h-12 opacity-40 border-b border-brand-green border-dashed flex items-center justify-center text-[10px] font-mono select-none">
@@ -128,7 +128,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
                 VISI MADRASAH
               </span>
               <p className="text-2xl sm:text-3xl font-display font-extrabold leading-tight tracking-tight pt-3">
-                "Terwujudnya Madrasah yang Unggul dalam Akademik, Kokoh dalam Karakter Islami, Mandiri dalam Riset, serta Tanggap Berwawasan Teknologi Global pada tahun 2028."
+                "Unggul dalam prestasi berdasarkan nilai-nilai Islam"
               </p>
             </div>
             <div className="border-t border-white/20 pt-6 mt-8 flex justify-between items-center">
@@ -147,11 +147,10 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
             </h3>
             <div className="space-y-3.5 text-xs sm:text-sm text-slate-700">
               {[
-                'Menyelenggarakan proses pembelajaran integratif yang memadukan kurikulum nasional madrasah dengan pemahaman ilmu agama (tafakkur fid-din) yang moderat.',
-                'Menumbuhkan keteladanan akhlak mulia dan karakter mulia melalui pembiasaan kedisiplinan ibadah mandiri, tadarus dhuha, serta amalan islami sehari-hari.',
-                'Mengembangkan bakat, minat, kreativitas sains, serta budaya gemar menulis (riset empiris) di kalangan dewan guru dan siswa.',
-                'Meningkatkan mutu sarana prasarana berbasis teknologi guna menunjang pelayanan edukasi administrasi digital yang efektif dan transparan.',
-                'Menjalin kolaborasi produktif dengan instansi akademis, pondok pesantren, industri, serta komite orang tua demi kemajuan mutu madrasah.'
+                'Menghasilkan peserta didik yang berakhlak mulia serta memiliki ilmu pengetahuan dan teknologi yang dapat diterapkan dalam dunia kerja dan kehidupan masyarakat berbangsa serta mengembangkan kemampuan lebih lanjut ke jenjang pendidikan yang lebih tinggi.',
+                'Menghasilkan peserta didik yang mampu mengembangkan diri sesuai dengan ilmu pengetahuan yang dimiliki dan tanggap terhadap kepentingan dan kebutuhan masyarakat.',
+                'Menghasilkan peserta didik yang memiliki kesadaran dan tanggung jawab sosial untuk memajukan kesejahteraan masyarakat dan bangsa, baik dalam kapasitas sebagai individu yang merupakan bagian dari masyarakat maupun sebagai makhluk yang akan mempertanggungjawabkan semua tindakannya di hadapan ALLAH Yang Maha Kuasa.',
+                'Mempersiapkan generasi muda terdidik yang inovatif, kreatif, berakhlak mulia, berwawasan luas, memiliki kesabaran dan mampu bersaing di dalam suasana yang demokratis.'
               ].map((misi, i) => (
                 <div key={i} className="flex gap-3 items-start">
                   <div className="w-6 h-6 rounded-full bg-brand-gold-light flex items-center justify-center text-brand-gold-dark shrink-0 font-bold text-xs">
@@ -206,7 +205,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
             <div className="flex justify-center">
               <div className="bg-brand-green text-white p-4 rounded-xl border border-brand-gold text-center w-64 shadow-md">
                 <p className="text-[10px] font-mono text-brand-gold uppercase tracking-wider font-bold">Kepala Madrasah</p>
-                <p className="font-display font-bold text-sm mt-1">Drs. H. Sofyan, M.Pd</p>
+                <p className="font-display font-bold text-sm mt-1">Suriya, S. Ag., M.Pd</p>
                 <p className="text-[9px] text-slate-300 font-sans mt-0.5">Penanggung Jawab Utama & Manajer</p>
               </div>
             </div>
@@ -225,8 +224,8 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
               </div>
 
               <div className="bg-slate-50 border border-slate-200 text-slate-800 p-3.5 rounded-xl text-center w-52 shadow-sm relative z-10">
-                <p className="text-[9px] font-mono text-slate-500 uppercase tracking-wider font-bold">Kepala Urusan Tata Usaha</p>
-                <p className="font-display font-bold text-xs mt-1">M. Yusuf, S.E</p>
+                <p className="text-[9px] font-mono text-slate-500 uppercase tracking-wider font-bold">Kepala Tata Usaha</p>
+                <p className="font-display font-bold text-xs mt-1">Nurhabsah, S.Pd</p>
                 <p className="text-[9px] text-slate-500 font-sans mt-0.5">Urusan Administrasi, Keuangan & Sarpras</p>
               </div>
             </div>
@@ -240,22 +239,22 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
               
               <div className="bg-white border-2 border-brand-green/35 text-slate-800 p-3 rounded-lg text-center shadow-sm relative z-10">
                 <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Kurikulum</p>
-                <p className="font-display font-bold text-xs mt-1">Safrizal, S.Pd.I</p>
+                <p className="font-display font-bold text-xs mt-1">Siscori Sriningsih Mulyati, S.T</p>
               </div>
 
               <div className="bg-white border-2 border-brand-green/35 text-slate-800 p-3 rounded-lg text-center shadow-sm relative z-10">
                 <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Kesiswaan</p>
-                <p className="font-display font-bold text-xs mt-1">Dra. Hj. Cut Nyak Fatimah</p>
+                <p className="font-display font-bold text-xs mt-1">Eny Sahara, S.Pd., M. Pd</p>
               </div>
 
               <div className="bg-white border-2 border-brand-green/35 text-slate-800 p-3 rounded-lg text-center shadow-sm relative z-10">
-                <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Sarana Prasarana</p>
-                <p className="font-display font-bold text-xs mt-1">Irwan Dani, S.T</p>
+                <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Sarpras</p>
+                <p className="font-display font-bold text-xs mt-1">Masrizal, S.Pd.I</p>
               </div>
 
               <div className="bg-white border-2 border-brand-green/35 text-slate-800 p-3 rounded-lg text-center shadow-sm relative z-10">
-                <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Humas Hubungan Publik</p>
-                <p className="font-display font-bold text-xs mt-1">Syamsiah, S.Ag</p>
+                <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Humas</p>
+                <p className="font-display font-bold text-xs mt-1">Fuadi.T, S.Pd.I., M.Pd</p>
               </div>
             </div>
           </div>

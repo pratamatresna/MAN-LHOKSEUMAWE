@@ -166,14 +166,14 @@ export default function ContactViews({ subTab }: ContactViewsProps) {
               </p>
               
               <a 
-                href="https://wa.me/6281269334412?text=Assalamu'alaikum%20Humas%20MAN%20Lhokseumawe,%20Saya%20tertarik%20bertanya%20seputar%20PPDB"
+                href="https://wa.me/6285262820401?text=Assalamu%27alaikum%20Humas%20MAN%20Lhokseumawe,%20Saya%20tertarik%20bertanya%20seputar%20PPDB"
                 target="_blank" 
                 rel="noreferrer" 
                 referrerPolicy="no-referrer"
                 className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-sans font-bold text-xs px-5 py-3 rounded-xl shadow-md cursor-pointer transition-colors"
               >
                 <MessageCircle size={18} />
-                <span>Hubungi via WhatsApp (+62 812 6933 4412)</span>
+                <span>Hubungi via WhatsApp (0852 6282 0401)</span>
               </a>
             </div>
 

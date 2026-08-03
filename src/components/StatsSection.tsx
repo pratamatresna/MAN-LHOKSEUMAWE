@@ -12,15 +12,15 @@ export default function StatsSection() {
     {
       id: 'stat-students',
       label: 'Siswa Terdaftar',
-      value: '685+',
-      description: 'Siswa Aktif TA 2026/2027',
+      value: '720',
+      description: 'Siswa Aktif Terdaftar',
       icon: Users,
     },
     {
       id: 'stat-teachers',
       label: 'Guru & Staf',
-      value: '42',
-      description: 'Pendidik Profesional Berlisensi',
+      value: '72',
+      description: 'Pendidik Profesional',
       icon: UserIcon,
     },
     {
@@ -40,7 +40,7 @@ export default function StatsSection() {
     {
       id: 'stat-ekskul',
       label: 'Ekstrakurikuler',
-      value: '14',
+      value: '10',
       description: 'Minat, Bakat, Seni, & Olahraga',
       icon: Compass,
     }
