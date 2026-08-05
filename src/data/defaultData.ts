@@ -10,11 +10,7 @@ export const initialNews: NewsItem[] = [
     id: 'news-1',
     title: 'Siswa MAN Kota Lhokseumawe Raih Medali Emas Olimpiade Sains Nasional (OSN) 2026',
     slug: 'siswa-man-lhokseumawe-emas-osn-2026',
-    content: `PRESTASI GEMILANG! Ananda Muhammad Al-Fatih, siswa kelas XI MIPA 1 MAN Kota Lhokseumawe berhasil mengharumkan nama Aceh di kancah nasional dengan meraih Medali Emas bidang Astronomi pada Olimpiade Sains Nasional (OSN) tahun 2026. 
-
-Kepala Madrasah, Drs. H. Sofyan, M.Pd, menyampaikan rasa syukur yang mendalam atas pencapaian ini. "Ini adalah bukti nyata bahwa madrasah kami mampu bersaing secara akademik di tingkat nasional. Pendidikan sains yang dipadukan dengan nilai-nilai karakter islami menjadikan siswa handal di bidang ilmu pengetahuan sekaligus kokoh dalam imtaq."
-
-Bapak Safrizal, S.Pd, selaku guru pembimbing astronomi, menyatakan bahwa persiapan intensif telah dilakukan selama 6 bulan penuh. "Ananda Fatih memiliki ketekunan luar biasa. Dia tidak hanya cerdas, tetapi juga selalu memulai belajarnya dengan doa dan tadarus singkat," pungkasnya. Madrasah berharap pencapaian ini dapat menjadi pemantik semangat bagi siswa-siswi lainnya.`,
+    content: `<p>PRESTASI GEMILANG! Ananda Muhammad Al-Fatih, siswa kelas XI MIPA 1 MAN Kota Lhokseumawe berhasil mengharumkan nama Aceh di kancah nasional dengan meraih Medali Emas bidang Astronomi pada Olimpiade Sains Nasional (OSN) tahun 2026.</p><p>Kepala Madrasah, Drs. H. Sofyan, M.Pd, menyampaikan rasa syukur yang mendalam atas pencapaian ini. "Ini adalah bukti nyata bahwa madrasah kami mampu bersaing secara akademik di tingkat nasional. Pendidikan sains yang dipadukan dengan nilai-nilai karakter islami menjadikan siswa handal di bidang ilmu pengetahuan sekaligus kokoh dalam imtaq."</p><p>Bapak Safrizal, S.Pd, selaku guru pembimbing astronomi, menyatakan bahwa persiapan intensif telah dilakukan selama 6 bulan penuh. "Ananda Fatih memiliki ketekunan luar biasa. Dia tidak hanya cerdas, tetapi juga selalu memulai belajarnya dengan doa dan tadarus singkat," pungkasnya. Madrasah berharap pencapaian ini dapat menjadi pemantik semangat bagi siswa-siswi lainnya.</p>`,
     category: 'Prestasi',
     date: '2026-05-28',
     imageUrl: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=800&q=80',
@@ -25,14 +21,7 @@ Bapak Safrizal, S.Pd, selaku guru pembimbing astronomi, menyatakan bahwa persiap
     id: 'news-2',
     title: 'Penerimaan Peserta Didik Baru (PPDB) Gelombang I Tahun Ajaran 2026/2027 Resmi Dibuka',
     slug: 'ppdb-online-gel-1-2026-2027',
-    content: `MAN Kota Lhokseumawe secara resmi mengumumkan pembukaan Penerimaan Peserta Didik Baru (PPDB) Jalur Reguler dan Prestasi Gelombang I untuk Tahun Ajaran 2026/2027. Proses pendaftaran dilaksanakan sepenuhnya secara online melalui website resmi ini mulai tanggal 1 Juni s.d. 25 Juni 2026.
-
-Sebagai salah satu Madrasah Aliyah Negeri rujukan di pesisir utara Aceh, MAN Kota Lhokseumawe menawarkan tiga program peminatan unggulan:
-1. MIPA Unggulan & Sains (Riset)
-2. IPS Terpadu & Kewirausahaan
-3. Keagamaan & Tahfidzul Qur'an (Target 5 - 10 Juz)
-
-Adapun syarat administrasi awal cukup dengan mengunggah scan rapor SMP/MTs semester 1-5, Kartu Rencana Keluarga (KK), serta Akta Kelahiran. Para calon peserta didik diharapkan memantau petunjuk teknis pendaftaran pendaftaran di area Download website Madrasah ini.`,
+    content: `<p>MAN Kota Lhokseumawe secara resmi mengumumkan pembukaan Penerimaan Peserta Didik Baru (PPDB) Jalur Reguler dan Prestasi Gelombang I untuk Tahun Ajaran 2026/2027. Proses pendaftaran dilaksanakan sepenuhnya secara online melalui website resmi ini mulai tanggal 1 Juni s.d. 25 Juni 2026.</p><p>Sebagai salah satu Madrasah Aliyah Negeri rujukan di pesisir utara Aceh, MAN Kota Lhokseumawe menawarkan tiga program peminatan unggulan:</p><ol><li>MIPA Unggulan & Sains (Riset)</li><li>IPS Terpadu & Kewirausahaan</li><li>Keagamaan & Tahfidzul Qur'an (Target 5 - 10 Juz)</li></ol><p>Adapun syarat administrasi awal cukup dengan mengunggah scan rapor SMP/MTs semester 1-5, Kartu Rencana Keluarga (KK), serta Akta Kelahiran. Para calon peserta didik diharapkan memantau petunjuk teknis pendaftaran pendaftaran di area Download website Madrasah ini.</p>`,
     category: 'Pengumuman',
     date: '2026-05-30',
     imageUrl: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80',
@@ -43,11 +32,7 @@ Adapun syarat administrasi awal cukup dengan mengunggah scan rapor SMP/MTs semes
     id: 'news-3',
     title: 'MAN Lhokseumawe Selenggarakan Wisuda Tahfidz Qur’an Angkatan Ke-VIII',
     slug: 'wisuda-tahfidz-angkatan-viii-man-lhokseumawe',
-    content: `MAN Kota Lhokseumawe sukses menyelenggarakan Wisuda Tahfidzul Qur'an ke-VIII bertempat di Aula Serbaguna Madrasah pada hari Kamis lalu. Sebanyak 45 orang wisudawan dan wisudawati yang telah menyelesaikan hafalan mulai dari juz 30, hingga maksimal 10 juz dikukuhkan langsung oleh Kepala Kantor Kementerian Agama Kota Lhokseumawe.
-
-Suasana haru menyelimuti seisi ruangan saat prosesi sungkeman dan pemasangan mahkota dari para penziarah Qur'an kepada orang tua masing-masing sebagai simbol bakti mereka. Kepala Madrasah menegaskan, program Tahfidz di MAN Lhokseumawe merupakan bagian dari kurikulum muatan lokal wajib bagi kelas keagamaan dan ekstrakurikuler pilihan bagi kelas sains dan sosial.
-
-"Kemenag Lhokseumawe sangat mengapresiasi inovasi kurikulum yang diterapkan MAN Kota Lhokseumawe. Lulusan madrasah ini tidak hanya siap lanjut ke perguruan tinggi umum, melainkan juga memiliki bekal spiritual yang kuat," ujar perwakilan Kemenag dalam sambutannya.`,
+    content: `<p>MAN Kota Lhokseumawe sukses menyelenggarakan Wisuda Tahfidzul Qur'an ke-VIII bertempat di Aula Serbaguna Madrasah pada hari Kamis lalu. Sebanyak 45 orang wisudawan dan wisudawati yang telah menyelesaikan hafalan mulai dari juz 30, hingga maksimal 10 juz dikukuhkan langsung oleh Kepala Kantor Kementerian Agama Kota Lhokseumawe.</p><p>Suasana haru menyelimuti seisi ruangan saat prosesi sungkeman dan pemasangan mahkota dari para penziarah Qur'an kepada orang tua masing-masing sebagai simbol bakti mereka. Kepala Madrasah menegaskan, program Tahfidz di MAN Lhokseumawe merupakan bagian dari kurikulum muatan lokal wajib bagi kelas keagamaan dan ekstrakurikuler pilihan bagi kelas sains dan sosial.</p><p>"Kemenag Lhokseumawe sangat mengapresiasi inovasi kurikulum yang diterapkan MAN Kota Lhokseumawe. Lulusan madrasah ini tidak hanya siap lanjut ke perguruan tinggi umum, melainkan juga memiliki bekal spiritual yang kuat," ujar perwakilan Kemenag dalam sambutannya.</p>`,
     category: 'Kegiatan',
     date: '2026-05-25',
     imageUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80',
@@ -58,11 +43,7 @@ Suasana haru menyelimuti seisi ruangan saat prosesi sungkeman dan pemasangan mah
     id: 'news-4',
     title: 'Sosialisasi Bahaya Narkoba & Kenakalan Remaja bersama Kepolisian Sektor Lhokseumawe',
     slug: 'sosialisasi-bahaya-narkoba-polsek-lhokseumawe',
-    content: `Dalam upaya melindungi generasi muda dari pengaruh buruk narkoba dan pergaulan bebas, OSIM MAN Kota Lhokseumawe bekerjasama dengan Kepolisian Sektor (Polsek) Lhokseumawe menyelenggarakan kegiatan sosialisasi hukum dan kesehatan. Acara ini dihadiri oleh seluruh siswa kelas X dan XI secara hybrid.
-
-Kapolsek Lhokseumawe bertindak sebagai pemateri utama, mengupas tuntas pasal-pasal penyalahgunaan zat adiktif, modus operandi peredaran di kalangan remaja, serta cara membangun tameng pertemanan yang sehat. Sesi interaktif berlangsung seru dengan tanya jawab berhadiah dari pihak kepolisian.
-
-"Melalui kegiatan ini, kami ingin siswa MAN Kota Lhokseumawe memegang prinsip 'Say No to Drugs, Say Yes to Achievements'. Benteng pertama adalah keimanan tebal yang ditanamkan madrasah, benteng kedua adalah pemahaman hukum yang baik," kata Pembina OSIM dalam laporannya.`,
+    content: `<p>Dalam upaya melindungi generasi muda dari pengaruh buruk narkoba dan pergaulan bebas, OSIM MAN Kota Lhokseumawe bekerjasama dengan Kepolisian Sektor (Polsek) Lhokseumawe menyelenggarakan kegiatan sosialisasi hukum dan kesehatan. Acara ini dihadiri oleh seluruh siswa kelas X dan XI secara hybrid.</p><p>Kapolsek Lhokseumawe bertindak sebagai pemateri utama, mengupas tuntas pasal-pasal penyalahgunaan zat adiktif, modus operandi peredaran di kalangan remaja, serta cara membangun tameng pertemanan yang sehat. Sesi interaktif berlangsung seru dengan tanya jawab berhadiah dari pihak kepolisian.</p><p>"Melalui kegiatan ini, kami ingin siswa MAN Kota Lhokseumawe memegang prinsip 'Say No to Drugs, Say Yes to Achievements'. Benteng pertama adalah keimanan tebal yang ditanamkan madrasah, benteng kedua adalah pemahaman hukum yang baik," kata Pembina OSIM dalam laporannya.</p>`,
     category: 'Berita',
     date: '2026-05-20',
     imageUrl: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80',

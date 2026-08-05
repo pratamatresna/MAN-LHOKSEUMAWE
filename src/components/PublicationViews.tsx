@@ -93,11 +93,10 @@ export default function PublicationViews({ subTab }: PublicationViewsProps) {
               />
             </div>
 
-            <div className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 white-space-pre-line font-sans pt-3">
-              {selectedNews.content.split('\n\n').map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
+            <div 
+              className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 font-sans pt-3 quill-content"
+              dangerouslySetInnerHTML={{ __html: selectedNews.content }}
+            />
           </div>
         ) : (
           /* LIST OF ALL NEWS AND ANNOUNCEMENTS WITH FILTERS */

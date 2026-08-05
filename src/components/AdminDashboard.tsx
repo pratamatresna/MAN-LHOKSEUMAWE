@@ -4,6 +4,8 @@
  */
 
 import React, { useState } from 'react';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 import { useSchool } from '../context/SchoolContext';
 import { 
   Lock, Settings, Users, FileText, PlusCircle, Trash, 
@@ -113,6 +115,7 @@ export default function AdminDashboard() {
     setNewsCat(n.category);
     setNewsContent(n.content);
     setNewsImg(n.imageUrl);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const startEditTeacher = (t: any) => {
@@ -722,14 +725,24 @@ export default function AdminDashboard() {
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold text-slate-650 block select-none">Isi Konten Berita *</label>
-                      <textarea 
-                        required
-                        rows={5}
+                      <ReactQuill 
+                        theme="snow"
                         value={newsContent}
-                        onChange={(e) => setNewsContent(e.target.value)}
+                        onChange={setNewsContent}
                         placeholder="Ketik paragraf warta madrasah lengkap..."
-                        className="w-full p-2.5 border text-xs text-slate-800 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-green"
-                      ></textarea>
+                        className="bg-white rounded-lg pb-12 mb-4"
+                        style={{ height: '200px' }}
+                        modules={{
+                          toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['link', 'image'],
+                            ['clean']
+                          ]
+                        }}
+                      />
                     </div>
                     <button 
                       type="submit"
