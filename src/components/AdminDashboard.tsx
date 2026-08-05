@@ -653,7 +653,7 @@ export default function AdminDashboard() {
             {activeAdminSec === 'news' && (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6" id="cms-news-panel">
                 {/* News input form */}
-                <div className="lg:col-span-1 bg-white border p-5 rounded-xl shadow-xs space-y-4">
+                <div className="lg:col-span-2 bg-white border p-5 rounded-xl shadow-xs space-y-4">
                   <h4 className="font-display font-black text-xs uppercase tracking-wider text-slate-900 border-b pb-2">
                     {editingId ? 'Edit Berita Terbuka' : 'Tulis Berita Baru'}
                   </h4>
@@ -768,50 +768,51 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Published news tabular lists */}
-                <div className="lg:col-span-2 bg-white border p-5 rounded-xl shadow-xs">
+                <div className="lg:col-span-1 bg-white border p-5 rounded-xl shadow-xs">
                   <h4 className="font-display font-black text-xs uppercase tracking-wider text-slate-900 border-b pb-2 mb-4">
-                    Tabel Berita Terbit
+                    Berita Terbit
                   </h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left font-sans text-xs border-collapse">
-                      <thead>
-                        <tr className="bg-slate-50 border-b text-slate-500 font-bold font-mono">
-                          <th className="p-3">Judul Berita</th>
-                          <th className="p-3">Kategori</th>
-                          <th className="p-3">Tanggal Terbit</th>
-                          <th className="p-3 text-center">Tindakan</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100 text-slate-705">
-                        {news.map((n) => (
-                          <tr key={n.id} className="hover:bg-slate-50/50">
-                            <td className="p-3 font-semibold text-slate-900 max-w-[200px] truncate">{n.title}</td>
-                            <td className="p-3">
-                              <span className="bg-slate-100 font-bold text-[9px] px-2 py-0.5 rounded">
-                                {n.category}
-                              </span>
-                            </td>
-                            <td className="p-3 font-mono">{n.date}</td>
-                            <td className="p-3 text-center flex items-center justify-center gap-1.5">
-                              <button 
-                                onClick={() => startEditNews(n)}
-                                className="p-1 hover:bg-slate-100 text-brand-green rounded cursor-pointer transition-colors"
-                                title="Edit Berita"
-                              >
-                                <Edit2 size={13} />
-                              </button>
-                              <button 
-                                onClick={() => deleteNews(n.id)}
-                                className="p-1 hover:bg-red-50 text-red-500 rounded cursor-pointer transition-colors"
-                                title="Hapus Berita"
-                              >
-                                <Trash size={13} />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="space-y-3">
+                    {news.map((n) => (
+                      <div key={n.id} className="p-3 border border-slate-200 rounded-lg hover:border-brand-green/30 hover:bg-slate-50 transition-all flex flex-col gap-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <h5 className="font-semibold text-slate-900 text-xs line-clamp-2 leading-snug flex-1">
+                            {n.title}
+                          </h5>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <button 
+                              type="button"
+                              onClick={() => startEditNews(n)}
+                              className="p-1.5 bg-white border hover:bg-slate-50 text-brand-green rounded cursor-pointer transition-colors shadow-xs"
+                              title="Edit Berita"
+                            >
+                              <Edit2 size={12} />
+                            </button>
+                            <button 
+                              type="button"
+                              onClick={() => deleteNews(n.id)}
+                              className="p-1.5 bg-white border hover:bg-red-50 text-red-500 rounded cursor-pointer transition-colors shadow-xs"
+                              title="Hapus Berita"
+                            >
+                              <Trash size={12} />
+                            </button>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="bg-slate-100 font-bold text-[9px] px-2 py-0.5 rounded text-slate-600">
+                            {n.category}
+                          </span>
+                          <span className="text-[10px] font-mono text-slate-500">
+                            {n.date}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                    {news.length === 0 && (
+                      <div className="text-center py-6 text-slate-400 text-[11px] italic">
+                        Belum ada berita terbit
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
