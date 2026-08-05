@@ -56,7 +56,7 @@ export default function PublicationViews({ subTab }: PublicationViewsProps) {
       {(subTab === 'berita' || subTab === 'pengumuman') && (
         selectedNews ? (
           /* DETAILED SINGLE NEWS ARTICLE VIEW */
-          <div className="bg-white border rounded-2xl overflow-hidden shadow-sm p-5 sm:p-10 max-w-4xl mx-auto space-y-6" id="news-details-modal">
+          <div className="bg-white border rounded-2xl overflow-hidden shadow-sm p-5 sm:p-10 max-w-4xl mx-auto space-y-6 min-w-0" id="news-details-modal">
             <button 
               onClick={() => setSelectedNews(null)}
               className="flex items-center gap-1.5 text-xs text-brand-green font-bold hover:underline mb-4 cursor-pointer"
