@@ -29,7 +29,7 @@ function AppContent() {
   const setTab = (tab: string, sub?: string) => {
     setCurrentTab(tab);
     setSubTab(sub || null);
-    window.scrollTo({ top: 300, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Render content according to the selected tab
