@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { useSchool } from '../context/SchoolContext';
+import { checkStatus } from '../services/ppdbService';
 import { PPDBRegistration } from '../types';
 import { 
   FileText, HelpCircle, CheckCircle, Upload, Award, 
@@ -38,66 +39,83 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
   const [ijazahFile, setIjazahFile] = useState<File | null>(null);
 
   const [formSubmitted, setFormSubmitted] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Status Checking State
   const [checkRegNum, setCheckRegNum] = useState('');
   const [matchedRecord, setMatchedRecord] = useState<PPDBRegistration | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
 
-  const handleRegisterSubmit = (e: React.FormEvent) => {
+  const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fullName.trim() || !nisn.trim() || !email.trim() || !phone.trim() || !schoolOrigin.trim()) {
       alert('Mohon isi semua data formulir yang bertanda bintang (*)');
       return;
     }
 
-    const regNumber = submitPpdb(
-      {
-        fullName,
-        nisn,
-        email,
-        phone,
-        schoolOrigin,
-        birthDate,
-        birthPlace,
-        gender,
-        religion: 'Islam',
-        address,
-        guardianName,
-        guardianPhone,
-        raporScore: Number(raporScore)
-      },
-      {
-        rapor: raporFile,
-        kk: kkFile,
-        ijazah: ijazahFile
-      }
-    );
+    setIsSubmitting(true);
+    try {
+      const regNumber = await submitPpdb(
+        {
+          fullName,
+          nisn,
+          email,
+          phone,
+          schoolOrigin,
+          birthDate,
+          birthPlace,
+          gender,
+          religion: 'Islam',
+          address,
+          guardianName,
+          guardianPhone,
+          raporScore: Number(raporScore)
+        },
+        {
+          rapor: raporFile,
+          kk: kkFile,
+          ijazah: ijazahFile
+        }
+      );
 
-    setFormSubmitted(regNumber);
-    
-    // Clear Form inputs
-    setFullName('');
-    setNisn('');
-    setEmail('');
-    setPhone('');
-    setSchoolOrigin('');
-    setBirthPlace('');
-    setBirthDate('');
-    setAddress('');
-    setGuardianName('');
-    setGuardianPhone('');
-    setRaporScore(85);
-    setRaporFile(null);
-    setKkFile(null);
-    setIjazahFile(null);
+      setFormSubmitted(regNumber);
+      
+      // Clear Form inputs
+      setFullName('');
+      setNisn('');
+      setEmail('');
+      setPhone('');
+      setSchoolOrigin('');
+      setBirthPlace('');
+      setBirthDate('');
+      setAddress('');
+      setGuardianName('');
+      setGuardianPhone('');
+      setRaporScore(85);
+      setRaporFile(null);
+      setKkFile(null);
+      setIjazahFile(null);
+    } catch (error) {
+      alert('Terjadi kesalahan saat mendaftar. Silakan coba lagi nanti.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleCheckStatus = (e: React.FormEvent) => {
+  const handleCheckStatus = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasSearched(true);
-    const matched = ppdbList.find(r => r.regNumber.trim().toUpperCase() === checkRegNum.trim().toUpperCase() || r.nisn === checkRegNum.trim());
-    setMatchedRecord(matched || null);
+    setIsChecking(true);
+    try {
+      const matched = await checkStatus(checkRegNum.trim());
+      setMatchedRecord(matched);
+    } catch (error) {
+      console.error(error);
+      setMatchedRecord(null);
+    } finally {
+      setIsChecking(false);
+    }
   };
 
   return (
@@ -446,9 +464,10 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full bg-brand-green hover:bg-brand-green-light hover:text-white border border-brand-gold text-white font-sans font-bold text-xs py-3 rounded-lg shadow-md hover:translate-y-[-2px] transition-all cursor-pointer"
+                    disabled={isSubmitting}
+                    className={`w-full bg-brand-green hover:bg-brand-green-light hover:text-white border border-brand-gold text-white font-sans font-bold text-xs py-3 rounded-lg shadow-md hover:translate-y-[-2px] transition-all cursor-pointer ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
-                    Kirim Formulir PPDB Online
+                    {isSubmitting ? 'Mengirim...' : 'Kirim Formulir PPDB Online'}
                   </button>
                 </div>
               </form>
@@ -479,10 +498,11 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
               />
               <button 
                 type="submit"
-                className="bg-brand-green border border-brand-gold hover:bg-brand-green-light text-white font-sans font-bold text-xs px-5 rounded-lg flex items-center gap-1.5 cursor-pointer"
+                disabled={isChecking}
+                className={`bg-brand-green border border-brand-gold hover:bg-brand-green-light text-white font-sans font-bold text-xs px-5 rounded-lg flex items-center gap-1.5 cursor-pointer ${isChecking ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Search className="w-4 h-4" />
-                <span>Periksa</span>
+                <span>{isChecking ? 'Memeriksa...' : 'Periksa'}</span>
               </button>
             </form>
           </div>

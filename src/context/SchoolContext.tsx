@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { NewsItem, Teacher, GalleryItem, PPDBRegistration, AcademicAgenda, DownloadFile, Book, MessageFeedback, Student, Alumni, ActivityLog } from '../types';
 import { 
   initialNews, 
@@ -34,6 +34,8 @@ import {
   signOut 
 } from 'firebase/auth';
 import { db, auth, handleFirestoreError, OperationType } from '../firebase';
+import * as authService from '../services/authService';
+import * as ppdbService from '../services/ppdbService';
 
 interface SchoolContextType {
   news: NewsItem[];
@@ -62,9 +64,10 @@ interface SchoolContextType {
   updateTeacher: (id: string, item: Partial<Teacher>) => void;
   addGalleryItem: (item: Omit<GalleryItem, 'id'>) => void;
   deleteGalleryItem: (id: string) => void;
-  submitPpdb: (form: Omit<PPDBRegistration, 'id' | 'regNumber' | 'status' | 'createdAt' | 'submittedFiles'>, files: { rapor: File | null; kk: File | null; ijazah: File | null }) => string;
-  updatePpdbStatus: (id: string, status: 'Verified' | 'Rejected') => void;
-  deletePpdb: (id: string) => void;
+  submitPpdb: (form: Omit<PPDBRegistration, 'id' | 'regNumber' | 'status' | 'createdAt' | 'submittedFiles'>, files: { rapor: File | null; kk: File | null; ijazah: File | null }) => Promise<string>;
+  updatePpdbStatus: (id: string, status: 'Verified' | 'Rejected') => Promise<void>;
+  deletePpdb: (id: string) => Promise<void>;
+  fetchPpdbList: () => Promise<void>;
   addAgenda: (item: Omit<AcademicAgenda, 'id'>) => void;
   deleteAgenda: (id: string) => void;
   updateAgenda: (id: string, item: Partial<AcademicAgenda>) => void;
@@ -88,7 +91,7 @@ interface SchoolContextType {
   addActivityLog: (operatorName: string, role: 'Admin Utama' | 'Staf Humas' | 'OSIM', action: string, details: string) => void;
   
   // Auth handlers
-  loginAdmin: (password: string, role?: 'Admin Utama' | 'Staf Humas' | 'OSIM') => boolean;
+  loginAdmin: (password: string, role?: 'Admin Utama' | 'Staf Humas' | 'OSIM') => Promise<boolean>;
   signInWithGoogle: () => Promise<void>;
   logoutAdmin: () => void;
   loginStudent: (name: string, nisn: string) => boolean;
@@ -181,17 +184,9 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
       console.warn("Firestore gallery fetch failed.", error);
     });
 
-    const unsubPpdb = onSnapshot(collection(db, 'ppdb'), (snapshot) => {
-      if (!snapshot.empty) {
-        const list = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as PPDBRegistration));
-        list.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-        setPpdbList(list);
-      } else {
-        setPpdbList(initialPpdb);
-      }
-    }, (error) => {
-      console.warn("Firestore PPDB registration fetch failed.", error);
-    });
+    // PPDB data is now fetched from the backend API instead of Firestore
+    // Removed Firestore onSnapshot for ppdb collection
+    const unsubPpdb = () => {}; // placeholder for cleanup consistency
 
     const unsubAgendas = onSnapshot(collection(db, 'agendas'), (snapshot) => {
       if (!snapshot.empty) {
@@ -294,31 +289,26 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   // Auth Operations
-  const loginAdmin = (password: string, role?: 'Admin Utama' | 'Staf Humas' | 'OSIM') => {
-    let matchingRole: 'Admin Utama' | 'Staf Humas' | 'OSIM' | null = null;
-    
-    if (password === 'admin123' || password === 'adminutama') {
-      matchingRole = 'Admin Utama';
-    } else if (password === 'adminman' || password === 'stafhumas') {
-      matchingRole = 'Staf Humas';
-    } else if (password === 'osim123') {
-      matchingRole = 'OSIM';
-    }
-
-    if (matchingRole) {
-      const selectedRole = role || matchingRole;
+  // Login via backend API (JWT)
+  const loginAdmin = async (password: string, role?: 'Admin Utama' | 'Staf Humas' | 'OSIM'): Promise<boolean> => {
+    const selectedRole = role || 'Admin Utama';
+    try {
+      await authService.login(selectedRole, password);
       setIsAdminLoggedIn(true);
       setAdminRole(selectedRole);
-      localStorage.setItem('man_lhokseumawe_admin_auth', 'true');
-      localStorage.setItem('man_lhokseumawe_admin_role', selectedRole);
 
       // Log the login event
       const operator = selectedRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : selectedRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
       addActivityLog(operator, selectedRole, 'Admin Login', `Berhasil melakukan autentikasi sistem.`);
-      
+
+      // Fetch PPDB data after successful login
+      fetchPpdbList();
+
       return true;
+    } catch (error: any) {
+      console.error('Login failed:', error?.response?.data?.message || error.message);
+      return false;
     }
-    return false;
   };
 
   const signInWithGoogle = async () => {
@@ -337,6 +327,7 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
     }
     setIsAdminLoggedIn(false);
     setAdminRole(null);
+    authService.logout(); // Clear JWT token
     localStorage.removeItem('man_lhokseumawe_admin_auth');
     localStorage.removeItem('man_lhokseumawe_admin_role');
     signOut(auth).catch((err) => console.warn("Firebase Sign out failed", err));
@@ -524,52 +515,81 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
       .catch(err => handleFirestoreError(err, OperationType.DELETE, `gallery/${id}`));
   };
 
-  const submitPpdb = (
+  // Fetch PPDB data from backend API
+  const fetchPpdbList = useCallback(async () => {
+    try {
+      const data = await ppdbService.getRegistrations();
+      setPpdbList(data);
+    } catch (error: any) {
+      console.warn('Failed to fetch PPDB from backend, using initial data.', error?.message);
+      setPpdbList(initialPpdb);
+    }
+  }, []);
+
+  // Load PPDB data on mount if admin is logged in
+  useEffect(() => {
+    if (isAdminLoggedIn) {
+      fetchPpdbList();
+    }
+  }, [isAdminLoggedIn, fetchPpdbList]);
+
+  // Submit PPDB via backend API
+  const submitPpdb = async (
     form: Omit<PPDBRegistration, 'id' | 'regNumber' | 'status' | 'createdAt' | 'submittedFiles'>,
     files: { rapor: File | null; kk: File | null; ijazah: File | null }
-  ): string => {
-    const regSeq = String(ppdbList.length + 1).padStart(4, '0');
-    const autoRegNumber = `PPDB-2026-${regSeq}`;
-    const docId = `ppdb-${Date.now()}`;
-    
-    const newReg = {
-      regNumber: autoRegNumber,
-      fullName: form.fullName,
-      nisn: form.nisn,
-      email: form.email,
-      phone: form.phone,
-      schoolOrigin: form.schoolOrigin,
-      birthDate: form.birthDate,
-      birthPlace: form.birthPlace,
-      gender: form.gender,
-      religion: form.religion,
-      address: form.address,
-      guardianName: form.guardianName,
-      guardianPhone: form.guardianPhone,
-      raporScore: Number(form.raporScore),
-      status: 'Pending',
-      createdAt: new Date().toISOString(),
-      submittedFiles: {
-        rapor: !!files.rapor,
-        kk: !!files.kk,
-        ijazah: !!files.ijazah
+  ): Promise<string> => {
+    try {
+      const result = await ppdbService.submitRegistration(
+        {
+          fullName: form.fullName,
+          nisn: form.nisn,
+          email: form.email,
+          phone: form.phone,
+          schoolOrigin: form.schoolOrigin,
+          birthDate: form.birthDate,
+          birthPlace: form.birthPlace,
+          gender: form.gender,
+          religion: form.religion,
+          address: form.address,
+          guardianName: form.guardianName,
+          guardianPhone: form.guardianPhone,
+          raporScore: Number(form.raporScore),
+        },
+        files
+      );
+
+      // Refresh the PPDB list after successful submission
+      if (isAdminLoggedIn) {
+        fetchPpdbList();
       }
-    };
 
-    setDoc(doc(db, 'ppdb', docId), newReg)
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `ppdb/${docId}`));
-
-    return autoRegNumber;
+      return result.regNumber;
+    } catch (error: any) {
+      console.error('PPDB submission failed:', error?.response?.data?.message || error.message);
+      throw error;
+    }
   };
 
-  const updatePpdbStatus = (id: string, status: 'Verified' | 'Rejected') => {
-    updateDoc(doc(db, 'ppdb', id), { status })
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `ppdb/${id}`));
+  // Update PPDB status via backend API
+  const updatePpdbStatus = async (id: string, status: 'Verified' | 'Rejected'): Promise<void> => {
+    try {
+      await ppdbService.updateStatus(id, status);
+      // Refresh list after status update
+      fetchPpdbList();
+    } catch (error: any) {
+      console.error('Status update failed:', error?.response?.data?.message || error.message);
+    }
   };
 
-  const deletePpdb = (id: string) => {
-    deleteDoc(doc(db, 'ppdb', id))
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `ppdb/${id}`));
+  // Delete PPDB registration via backend API
+  const deletePpdb = async (id: string): Promise<void> => {
+    try {
+      await ppdbService.deleteRegistration(id);
+      // Refresh list after deletion
+      fetchPpdbList();
+    } catch (error: any) {
+      console.error('Delete failed:', error?.response?.data?.message || error.message);
+    }
   };
 
   const addAgenda = (item: Omit<AcademicAgenda, 'id'>) => {
@@ -661,6 +681,7 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
       deleteGalleryItem,
       submitPpdb,
       updatePpdbStatus,
+      fetchPpdbList,
       deletePpdb,
       addAgenda,
       deleteAgenda,

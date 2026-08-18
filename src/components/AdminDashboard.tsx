@@ -28,6 +28,7 @@ export default function AdminDashboard() {
   const [passwordInput, setPasswordInput] = useState('');
   const [loginRoleOption, setLoginRoleOption] = useState<'Admin Utama' | 'Staf Humas' | 'OSIM'>('Admin Utama');
   const [loginError, setLoginError] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [activeAdminSec, setActiveAdminSec] = useState('dashboard');
 
   // Add Book Form State
@@ -174,14 +175,22 @@ export default function AdminDashboard() {
     setAlTestimony(al.testimony || '');
   };
 
-  const handleAdminLogin = (e: React.FormEvent) => {
+  const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = loginAdmin(passwordInput, loginRoleOption);
-    if (success) {
-      setLoginError(false);
-      setPasswordInput('');
-    } else {
+    setIsLoggingIn(true);
+    setLoginError(false);
+    try {
+      const success = await loginAdmin(passwordInput, loginRoleOption);
+      if (success) {
+        setPasswordInput('');
+      } else {
+        setLoginError(true);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
       setLoginError(true);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -450,9 +459,10 @@ export default function AdminDashboard() {
             <div className="pt-2">
               <button
                 type="submit"
-                className="w-full bg-brand-green hover:bg-brand-green-light hover:text-white text-white font-sans font-bold text-xs py-2.5 rounded-lg border border-brand-gold shadow cursor-pointer"
+                disabled={isLoggingIn}
+                className={`w-full bg-brand-green hover:bg-brand-green-light hover:text-white text-white font-sans font-bold text-xs py-2.5 rounded-lg border border-brand-gold shadow cursor-pointer ${isLoggingIn ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
-                Log In Operator
+                {isLoggingIn ? 'Memproses...' : 'Log In Operator'}
               </button>
             </div>
           </form>
