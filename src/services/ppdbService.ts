@@ -67,7 +67,7 @@ export const getRegistrations = async (): Promise<PPDBRegistration[]> => {
   const response = await api.get('/ppdb/registrations');
   
   // Map backend response to frontend PPDBRegistration type
-  return response.data.registrations.map((reg: any) => ({
+  return response.data.map((reg: any) => ({
     id: reg._id || reg.id,
     regNumber: reg.regNumber,
     fullName: reg.fullName,
@@ -101,7 +101,7 @@ export const checkStatus = async (
 ): Promise<PPDBRegistration | null> => {
   try {
     const response = await api.get(`/ppdb/registrations/${encodeURIComponent(query)}`);
-    const reg = response.data.registration;
+    const reg = response.data;
     
     if (!reg) return null;
 
