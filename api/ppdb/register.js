@@ -6,8 +6,7 @@ import { setCors } from '../_lib/auth.js';
 
 /**
  * Parse multipart/form-data from the request.
- * Vercel reads the body into req.body as a Buffer for non-JSON content types.
- * We create a readable stream from the buffer and pipe it to Busboy.
+ * Vercel parses the raw stream into a Buffer in req.body for multipart requests.
  */
 function parseMultipart(req) {
   return new Promise((resolve, reject) => {
@@ -56,11 +55,16 @@ function parseMultipart(req) {
     busboy.on('finish', () => resolve({ fields, files }));
     busboy.on('error', reject);
 
-    // Convert the buffer body back to a readable stream and pipe to busboy
-    const readable = new Readable();
-    readable.push(req.body);
-    readable.push(null);
-    readable.pipe(busboy);
+    // Feed Vercel's buffered body directly into busboy
+    if (Buffer.isBuffer(req.body)) {
+      busboy.end(req.body);
+    } else if (req.body && typeof req.body === 'string') {
+      // In case Vercel parsed it as a string
+      busboy.end(Buffer.from(req.body));
+    } else {
+      // Fallback for local development or if it's still a stream
+      req.pipe(busboy);
+    }
   });
 }
 
