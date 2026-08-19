@@ -21,7 +21,7 @@ export default async function handler(req, res) {
           { regNumber: { $regex: new RegExp('^' + id + '$', 'i') } },
           { nisn: id }
         ]
-      });
+      }).lean();
 
       if (registration) {
         res.json(registration);

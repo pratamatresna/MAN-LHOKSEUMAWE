@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
   try {
     await connectDB();
-    const registrations = await Registration.find().sort({ createdAt: -1 });
+    const registrations = await Registration.find().sort({ createdAt: -1 }).lean();
     res.json(registrations);
   } catch (error) {
     res.status(500).json({ message: error.message });
