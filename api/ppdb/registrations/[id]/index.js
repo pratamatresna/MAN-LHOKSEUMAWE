@@ -1,6 +1,6 @@
-import connectDB from '../../_lib/db.js';
-import Registration from '../../_lib/models/Registration.js';
-import { verifyToken, setCors } from '../../_lib/auth.js';
+import connectDB from '../../../_lib/db.js';
+import Registration from '../../../_lib/models/Registration.js';
+import { verifyToken, setCors } from '../../../_lib/auth.js';
 
 export default async function handler(req, res) {
   setCors(res);
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { param } = req.query;
+  const { id } = req.query;
 
   await connectDB();
 
@@ -18,8 +18,8 @@ export default async function handler(req, res) {
     try {
       const registration = await Registration.findOne({
         $or: [
-          { regNumber: { $regex: new RegExp('^' + param + '$', 'i') } },
-          { nisn: param }
+          { regNumber: { $regex: new RegExp('^' + id + '$', 'i') } },
+          { nisn: id }
         ]
       });
 
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     }
 
     try {
-      const registration = await Registration.findByIdAndDelete(param);
+      const registration = await Registration.findByIdAndDelete(id);
 
       if (registration) {
         res.json({ message: 'Registration deleted successfully' });
