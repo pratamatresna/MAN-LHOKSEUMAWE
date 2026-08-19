@@ -11,10 +11,10 @@ const seedUsers = async () => {
     const users = [
       { username: 'Admin', role: 'Admin', password: process.env.ROLE_ADMIN_PASS || 'admin123' },
       { username: 'Humas', role: 'Humas', password: process.env.ROLE_HUMAS_PASS || 'adminman' },
-      { username: 'OSIM', role: 'OSIM', password: process.env.ROLE_OSIM_PASS || 'osim12' }
+      { username: 'OSIM', role: 'OSIM', password: process.env.ROLE_OSIM_PASS || 'osim123' }
     ];
 
-    await User.insertMany(users);
+    await User.create(users);
     console.log('Users seeded successfully');
     process.exit();
   } catch (error) {

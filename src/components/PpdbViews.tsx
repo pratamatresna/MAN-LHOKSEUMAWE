@@ -37,6 +37,36 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
   const [raporFile, setRaporFile] = useState<File | null>(null);
   const [kkFile, setKkFile] = useState<File | null>(null);
   const [ijazahFile, setIjazahFile] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+  const ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+  const ALLOWED_EXTS = /\.(pdf|jpg|jpeg|png)$/i;
+
+  const validateFile = (file: File): string | null => {
+    if (!ALLOWED_TYPES.includes(file.type) || !ALLOWED_EXTS.test(file.name)) {
+      return `"${file.name}" tidak valid. File harus berformat PDF atau JPG/PNG.`;
+    }
+    if (file.size > MAX_SIZE) {
+      return `"${file.name}" terlalu besar. Ukuran file tidak boleh lebih dari 2MB.`;
+    }
+    return null;
+  };
+
+  const handleFileChange = (
+    setter: React.Dispatch<React.SetStateAction<File | null>>
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    if (!file) return;
+    const err = validateFile(file);
+    if (err) {
+      setFileError(err);
+      e.target.value = ''; // reset input
+      return;
+    }
+    setFileError(null);
+    setter(file);
+  };
 
   const [formSubmitted, setFormSubmitted] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,6 +85,7 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
     }
 
     setIsSubmitting(true);
+    setFileError(null);
     try {
       const regNumber = await submitPpdb(
         {
@@ -96,8 +127,12 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
       setRaporFile(null);
       setKkFile(null);
       setIjazahFile(null);
-    } catch (error) {
-      alert('Terjadi kesalahan saat mendaftar. Silakan coba lagi nanti.');
+      setFileError(null);
+    } catch (error: any) {
+      const msg =
+        error?.response?.data?.message ||
+        'Terjadi kesalahan saat mendaftar. Silakan coba lagi nanti.';
+      setFileError(msg);
     } finally {
       setIsSubmitting(false);
     }
@@ -411,11 +446,12 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
                       <Upload className="w-6 h-6 text-slate-400 mb-2" />
                       <p className="text-[10px] font-bold text-slate-700">Scan Rapor SMP/MTs (Smt 1-5)</p>
                       <label className="mt-2.5 cursor-pointer bg-slate-100 hover:bg-brand-green hover:text-white border px-3 py-1.5 text-[9px] font-bold rounded duration-200">
-                        Pilin File
+                        Pilih File
                         <input 
                           type="file" 
-                          className="hidden" 
-                          onChange={(e) => setRaporFile(e.target.files ? e.target.files[0] : null)}
+                          className="hidden"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          onChange={handleFileChange(setRaporFile)}
                         />
                       </label>
                       {raporFile && <p className="text-[9px] text-emerald-800 font-mono mt-1 font-bold truncate max-w-[120px]">✓ {raporFile.name}</p>}
@@ -429,8 +465,9 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
                         Pilih File
                         <input 
                           type="file" 
-                          className="hidden" 
-                          onChange={(e) => setKkFile(e.target.files ? e.target.files[0] : null)}
+                          className="hidden"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          onChange={handleFileChange(setKkFile)}
                         />
                       </label>
                       {kkFile && <p className="text-[9px] text-emerald-800 font-mono mt-1 font-bold truncate max-w-[120px]">✓ {kkFile.name}</p>}
@@ -444,8 +481,9 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
                         Pilih File
                         <input 
                           type="file" 
-                          className="hidden" 
-                          onChange={(e) => setIjazahFile(e.target.files ? e.target.files[0] : null)}
+                          className="hidden"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          onChange={handleFileChange(setIjazahFile)}
                         />
                       </label>
                       {ijazahFile && <p className="text-[9px] text-emerald-800 font-mono mt-1 font-bold truncate max-w-[120px]">✓ {ijazahFile.name}</p>}
@@ -461,16 +499,25 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
                   </p>
                 </div>
 
+                {/* Error Notification */}
+                {fileError && (
+                  <div className="flex items-start gap-2.5 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3">
+                    <AlertCircle className="w-4 h-4 mt-0.5 shrink-0 text-red-500" />
+                    <p className="text-xs font-medium leading-relaxed">{fileError}</p>
+                  </div>
+                )}
+
                 <div className="pt-2">
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className={`w-full bg-brand-green hover:bg-brand-green-light hover:text-white border border-brand-gold text-white font-sans font-bold text-xs py-3 rounded-lg shadow-md hover:translate-y-[-2px] transition-all cursor-pointer ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    disabled={isSubmitting || !!fileError}
+                    className={`w-full bg-brand-green hover:bg-brand-green-light hover:text-white border border-brand-gold text-white font-sans font-bold text-xs py-3 rounded-lg shadow-md hover:translate-y-[-2px] transition-all cursor-pointer ${(isSubmitting || !!fileError) ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
                     {isSubmitting ? 'Mengirim...' : 'Kirim Formulir PPDB Online'}
                   </button>
                 </div>
               </form>
+
             </div>
           )}
         </div>
