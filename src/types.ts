@@ -94,7 +94,8 @@ export interface Book {
   category: string;
   isbn: string;
   available: boolean;
-  coverUrl: string;
+  coverUrl?: string;
+  publishedYear?: string;
 }
 
 export interface Student {
@@ -103,19 +104,21 @@ export interface Student {
   nisn: string;
   nism: string;
   class: string;
-  gender: 'L' | 'P';
-  phone: string;
-  graduationStatus?: 'Lulus' | 'Belum Lulus';
+  gender?: 'L' | 'P';
+  phone?: string;
+  graduationStatus?: 'Lulus' | 'Belum Lulus' | 'Aktif';
   raporScore?: number;
 }
 
 export interface Alumni {
   id: string;
   name: string;
-  nisn: string;
+  nisn?: string;
   graduationYear: string;
-  status: string; // e.g., "Kuliah di UIN Ar-Raniry", "Bekerja", "Wiraswasta"
-  gender: 'L' | 'P';
+  status?: string;
+  currentStatus?: string;
+  gender?: 'L' | 'P';
+  testimony?: string;
 }
 
 export interface ActivityLog {

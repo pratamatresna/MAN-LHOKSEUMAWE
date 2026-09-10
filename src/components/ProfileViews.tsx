@@ -8,7 +8,7 @@ import { useSchool } from '../context/SchoolContext';
 import { Teacher } from '../types';
 import { 
   Award, ShieldCheck, MapPin, Search, Filter, BookOpen, 
-  School, Compass, CheckCircle2, FileText, Layout
+  School, Compass, CheckCircle2, FileText, Layout, X
 } from 'lucide-react';
 
 interface ProfileViewsProps {
@@ -19,6 +19,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
   const { teachers } = useSchool();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
+  const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
 
   // Filtered Teacher results
   const filteredTeachers = teachers.filter((t) => {
@@ -111,6 +112,24 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
                 <div className="w-24 h-12 opacity-40 border-b border-brand-green border-dashed flex items-center justify-center text-[10px] font-mono select-none">
                   [ Tanda Tangan ]
                 </div>
+              </div>
+              
+              {/* Video Sambutan */}
+              <div className="pt-6 mt-6 border-t">
+                <h3 className="text-sm font-display font-bold text-slate-800 mb-4">
+                  Video Sambutan Kepala Madrasah
+                </h3>
+                <div className="aspect-w-16 aspect-h-9 w-full rounded-xl overflow-hidden bg-slate-100 shadow-sm border border-slate-200">
+                  <iframe 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="Sambutan Kepala Madrasah" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                    className="w-full h-full min-h-[300px]"
+                  ></iframe>
+                </div>
+                <p className="text-[10px] text-slate-400 mt-2 font-mono">* Catatan: Ini adalah video placeholder sementara.</p>
               </div>
             </div>
           </div>
@@ -307,7 +326,8 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
             {filteredTeachers.map((teacher) => (
               <div 
                 key={teacher.id}
-                className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all duration-300 flex flex-col justify-between"
+                onClick={() => setSelectedTeacher(teacher)}
+                className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all duration-300 flex flex-col justify-between cursor-pointer"
               >
                 <div className="p-5 flex items-start space-x-4">
                   {/* Photo Profile */}
@@ -354,6 +374,58 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
               </div>
             )}
           </div>
+
+          {/* Teacher Modal */}
+          {selectedTeacher && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setSelectedTeacher(null)}>
+              <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-slide-up" onClick={e => e.stopPropagation()}>
+                <div className="relative h-32 bg-brand-green">
+                  <button 
+                    onClick={() => setSelectedTeacher(null)}
+                    className="absolute top-4 right-4 text-white hover:text-brand-gold bg-black/20 hover:bg-black/40 rounded-full p-1.5 transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="px-6 pb-6 relative">
+                  <div className="flex justify-center -mt-16 mb-4">
+                    <img 
+                      src={selectedTeacher.imageUrl} 
+                      alt={selectedTeacher.name}
+                      className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-md bg-white"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="text-center space-y-1 mb-6">
+                    <span className="bg-brand-gold/15 text-brand-gold-dark text-[10px] font-mono font-extrabold px-2 py-0.5 rounded uppercase tracking-wider inline-block mb-1">
+                      {selectedTeacher.status}
+                    </span>
+                    <h3 className="font-display font-black text-xl text-slate-900 leading-tight">
+                      {selectedTeacher.name}
+                    </h3>
+                    <p className="text-sm text-brand-green font-bold">
+                      {selectedTeacher.role}
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3 text-sm text-slate-600 bg-slate-50 rounded-xl p-4 border">
+                    <div className="flex justify-between border-b pb-2">
+                      <span className="text-slate-500">NIP</span>
+                      <span className="font-mono text-slate-800 font-semibold">{selectedTeacher.nip === 'PNS' ? '-' : selectedTeacher.nip}</span>
+                    </div>
+                    <div className="flex justify-between border-b pb-2">
+                      <span className="text-slate-500">Mata Pelajaran</span>
+                      <span className="font-medium text-slate-800">{selectedTeacher.subject}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Jenis Kelamin</span>
+                      <span className="font-medium text-slate-800">{selectedTeacher.gender === 'L' ? 'Laki-laki' : 'Perempuan'}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -424,7 +496,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
             {/* Right Prestasi list */}
             <div className="lg:col-span-2 bg-white border p-6 sm:p-10 rounded-2xl shadow-sm space-y-6">
               <span className="bg-brand-green/10 text-brand-green text-xs font-mono font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                Prestasi Madrasah 3 Tahun Terakhir
+                Prestasi Madrasah
               </span>
               <h3 className="text-xl font-display font-black text-slate-900 border-l-4 border-brand-gold pl-3">
                 Lintas Penghargaan Akademik & Madrasah
@@ -464,6 +536,27 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+          
+          {/* Riwayat Akreditasi */}
+          <div className="bg-white border rounded-2xl shadow-sm p-6 sm:p-10 space-y-6">
+            <h3 className="text-xl font-display font-black text-slate-900 border-l-4 border-brand-green pl-3">
+              Riwayat Akreditasi Madrasah
+            </h3>
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-xl bg-slate-50">
+                <div>
+                  <h4 className="font-display font-bold text-slate-900">Akreditasi A (Unggul)</h4>
+                  <p className="text-xs text-slate-500">Tahun 2025 - 2030</p>
+                </div>
+                <div className="mt-2 sm:mt-0 px-3 py-1 bg-brand-green/10 text-brand-green rounded text-xs font-bold border border-brand-green/20 text-center">
+                  Status: Aktif
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 font-mono italic">
+                * Data historis akreditasi tahun sebelumnya sedang dalam proses sinkronisasi dengan database madrasah.
+              </p>
             </div>
           </div>
         </div>

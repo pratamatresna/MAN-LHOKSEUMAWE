@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
+/* Global background color revisi */
+body {
+  background-color: rgb(238, 252, 245);
+}
+
 @theme {
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-display: "Plus Jakarta Sans", sans-serif;
@@ -76,7 +81,9 @@
 
 /* Light gray backgrounds transition to dark titanium slate */
 .dark .bg-slate-50,
-.dark .bg-\[\#f8f9fa\] {
+.dark .bg-\[\#f8f9fa\],
+.dark .bg-\[\#eefcf5\],
+.dark .bg-\[\#e2f9ed\] {
   background-color: #0f172a !important; /* bg-slate-900 */
   border-color: #334155 !important;
 }

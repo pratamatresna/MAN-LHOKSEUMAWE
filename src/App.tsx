@@ -59,7 +59,7 @@ function AppContent() {
   };
 
   return (
-    <div className={`flex flex-col min-h-screen font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-800'}`} id="school-app">
+    <div className={`flex flex-col min-h-screen font-sans transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-[#eefcf5] text-slate-800'}`} id="school-app">
       <Navbar currentTab={currentTab} setTab={setTab} subTab={subTab} />
       
       {/* Dynamic Main Body Content */}
@@ -87,7 +87,7 @@ function HomepageLayout({ setTab, news, agendas }: HomepageProps) {
   const recentNews = news.slice(0, 4);
 
   return (
-    <div className={`space-y-16 pb-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-900 text-slate-100' : 'bg-white text-slate-800'} animate-fade-in`} id="homepage-root">
+    <div className={`space-y-16 pb-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-900 text-slate-100' : 'bg-[#eefcf5] text-slate-800'} animate-fade-in`} id="homepage-root">
       {/* 1. Hero Auto Carousel Slider */}
       <HeroSlider setTab={setTab} />
 
@@ -193,7 +193,7 @@ function HomepageLayout({ setTab, news, agendas }: HomepageProps) {
       </section>
 
       {/* 5. Quick Links & Academic Timelines */}
-      <section className={`border-y py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-950 border-slate-800' : 'bg-[#f8f9fa] border-slate-150/60'}`} id="school-directories-highlights">
+      <section className={`border-y py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-950 border-slate-800' : 'bg-[#e2f9ed] border-slate-150/60'}`} id="school-directories-highlights">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
           
           {/* Left links columns */}
@@ -258,24 +258,37 @@ function HomepageLayout({ setTab, news, agendas }: HomepageProps) {
           </div>
 
           {/* Right upcoming events */}
-          <div className="lg:col-span-5 space-y-4">
-            <h3 className={`font-display font-extrabold uppercase text-xs sm:text-sm tracking-wider border-b pb-3 ${theme === 'dark' ? 'text-brand-gold border-slate-800' : 'text-brand-green border-slate-200'}`}>
+          <div className="lg:col-span-5 flex flex-col h-full">
+            <h3 className={`font-display font-extrabold uppercase text-xs sm:text-sm tracking-wider border-b pb-3 mb-4 ${theme === 'dark' ? 'text-brand-gold border-slate-800' : 'text-brand-green border-slate-200'}`}>
               Agenda Kegiatan Terkini
             </h3>
 
-            <div className="space-y-3.5">
+            <div className="space-y-3.5 flex-grow">
               {agendas.slice(0, 3).map((ag) => (
                 <div key={ag.id} className={`p-3.5 border rounded-lg flex items-start gap-3 hover:border-brand-gold transition-all group ${theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-150'}`}>
                   <div className={`p-2.5 rounded-lg text-center font-sans shrink-0 w-16 border transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-800 border-slate-750 text-slate-100 group-hover:bg-brand-gold group-hover:text-slate-900' : 'bg-slate-50 border-slate-100 text-slate-700 group-hover:bg-brand-gold group-hover:text-slate-950'}`}>
                     <Calendar className="w-4 h-4 text-brand-gold-dark group-hover:text-slate-950 mx-auto mb-0.5 transition-colors" />
-                    <span className="text-[9px] font-bold text-slate-400 group-hover:text-slate-900 tracking-wider block transition-colors">{ag.date.split(' ')[0]} {ag.date.split(' ')[1] || 'Jun'}</span>
+                    <span className="text-[9px] font-bold text-slate-400 group-hover:text-slate-900 tracking-wider block transition-colors">{(ag.date || '').split(' ')[0]} {(ag.date || '').split(' ')[1] || 'Jun'}</span>
                   </div>
                   <div className="space-y-1 py-0.5">
                     <h4 className={`font-display font-bold text-xs sm:text-xs line-clamp-1 uppercase tracking-tight group-hover:text-brand-gold transition-colors ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{ag.title}</h4>
-                    <p className={`text-[10px] font-sans ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>{ag.time} • {ag.location}</p>
+                    <p className={`text-[10px] font-sans font-medium ${theme === 'dark' ? 'text-brand-gold' : 'text-brand-green'}`}>{ag.time} • {ag.location}</p>
+                    {ag.description && (
+                      <p className={`text-[10px] line-clamp-2 leading-relaxed ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>{ag.description}</p>
+                    )}
                   </div>
                 </div>
               ))}
+            </div>
+            
+            <div className="mt-4 pt-4 border-t border-slate-150 text-center">
+              <button
+                onClick={() => setTab('akademik', 'agenda')}
+                className={`font-sans font-bold text-xs inline-flex items-center gap-1 hover:underline cursor-pointer ${theme === 'dark' ? 'text-amber-400 hover:text-amber-300' : 'text-brand-green hover:text-brand-gold'}`}
+              >
+                Lihat Semua Agenda
+                <ChevronRight size={14} className="text-brand-gold" />
+              </button>
             </div>
           </div>
 

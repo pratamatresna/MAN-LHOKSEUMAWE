@@ -4,38 +4,18 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { NewsItem, Teacher, GalleryItem, PPDBRegistration, AcademicAgenda, DownloadFile, Book, MessageFeedback, Student, Alumni, ActivityLog } from '../types';
-import { 
-  initialNews, 
-  initialTeachers, 
-  initialGallery, 
-  initialPpdb, 
-  initialAgendas, 
-  initialDownloads, 
-  initialBooks,
-  initialFeedbacks,
-  initialStudents,
-  initialAlumni,
-  initialActivityLogs
-} from '../data/defaultData';
-import { 
-  collection, 
-  doc, 
-  onSnapshot, 
-  setDoc, 
-  deleteDoc, 
-  updateDoc, 
-  increment 
-} from 'firebase/firestore';
-import { 
-  onAuthStateChanged, 
-  GoogleAuthProvider, 
-  signInWithPopup, 
-  signOut 
-} from 'firebase/auth';
-import { db, auth, handleFirestoreError, OperationType } from '../firebase';
 import * as authService from '../services/authService';
 import * as ppdbService from '../services/ppdbService';
+import * as dataService from '../services/dataService';
+import {
+  NewsItem, Teacher, GalleryItem, PPDBRegistration, AcademicAgenda,
+  DownloadFile, Book, MessageFeedback, Student, Alumni, ActivityLog
+} from '../types';
+import {
+  initialNews, initialTeachers, initialGallery, initialPpdb,
+  initialAgendas, initialDownloads, initialBooks, initialFeedbacks,
+  initialStudents, initialAlumni, initialActivityLogs
+} from '../data/defaultData';
 
 interface SchoolContextType {
   news: NewsItem[];
@@ -92,8 +72,7 @@ interface SchoolContextType {
   
   // Auth handlers
   loginAdmin: (password: string, role?: 'Admin Utama' | 'Staf Humas' | 'OSIM') => Promise<boolean>;
-  signInWithGoogle: () => Promise<void>;
-  logoutAdmin: () => void;
+    logoutAdmin: () => void;
   loginStudent: (name: string, nisn: string) => boolean;
   logoutStudent: () => void;
 
@@ -150,143 +129,48 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
     return saved ? JSON.parse(saved) : null;
   });
 
-  // 1. Listen to real-time changes in Firestore with fallback to template arrays if database is empty or offline
+
+  // 1. Fetch all data from MongoDB on mount
   useEffect(() => {
-    const unsubNews = onSnapshot(collection(db, 'news'), (snapshot) => {
-      if (!snapshot.empty) {
-        const list = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as NewsItem));
-        list.sort((a, b) => b.date.localeCompare(a.date));
-        setNews(list);
-      } else {
-        setNews(initialNews);
+    const fetchData = async () => {
+      try {
+        const [
+          newsData, teachersData, galleryData, agendasData, 
+          downloadsData, booksData, feedbacksData, studentsData, 
+          alumniData, logsData
+        ] = await Promise.all([
+          dataService.newsService.getAll().catch(() => initialNews),
+          dataService.teacherService.getAll().catch(() => initialTeachers),
+          dataService.galleryService.getAll().catch(() => initialGallery),
+          dataService.agendaService.getAll().catch(() => initialAgendas),
+          dataService.downloadService.getAll().catch(() => initialDownloads),
+          dataService.bookService.getAll().catch(() => initialBooks),
+          dataService.feedbackService.getAll().catch(() => initialFeedbacks),
+          dataService.studentService.getAll().catch(() => initialStudents),
+          dataService.alumniService.getAll().catch(() => initialAlumni),
+          dataService.logService.getAll().catch(() => initialActivityLogs)
+        ]);
+        
+        newsData.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+        logsData.sort((a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
+
+        setNews(newsData.length ? newsData : initialNews);
+        setTeachers(teachersData.length ? teachersData : initialTeachers);
+        setGallery(galleryData.length ? galleryData : initialGallery);
+        setAgendas(agendasData.length ? agendasData : initialAgendas);
+        setDownloads(downloadsData.length ? downloadsData : initialDownloads);
+        setBooks(booksData.length ? booksData : initialBooks);
+        setFeedbacks(feedbacksData.length ? feedbacksData : initialFeedbacks);
+        setStudents(studentsData.length ? studentsData : initialStudents);
+        setAlumni(alumniData.length ? alumniData : initialAlumni);
+        setActivityLogs(logsData.length ? logsData : initialActivityLogs);
+      } catch (error) {
+        console.error("Failed to fetch data from MongoDB:", error);
       }
-    }, (error) => {
-      console.warn("Firestore news fetch failed, displaying template fallback.", error);
-    });
-
-    const unsubTeachers = onSnapshot(collection(db, 'teachers'), (snapshot) => {
-      if (!snapshot.empty) {
-        setTeachers(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Teacher)));
-      } else {
-        setTeachers(initialTeachers);
-      }
-    }, (error) => {
-      console.warn("Firestore teachers fetch failed.", error);
-    });
-
-    const unsubGallery = onSnapshot(collection(db, 'gallery'), (snapshot) => {
-      if (!snapshot.empty) {
-        setGallery(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as GalleryItem)));
-      } else {
-        setGallery(initialGallery);
-      }
-    }, (error) => {
-      console.warn("Firestore gallery fetch failed.", error);
-    });
-
-    // PPDB data is now fetched from the backend API instead of Firestore
-    // Removed Firestore onSnapshot for ppdb collection
-    const unsubPpdb = () => {}; // placeholder for cleanup consistency
-
-    const unsubAgendas = onSnapshot(collection(db, 'agendas'), (snapshot) => {
-      if (!snapshot.empty) {
-        setAgendas(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as AcademicAgenda)));
-      } else {
-        setAgendas(initialAgendas);
-      }
-    }, (error) => {
-      console.warn("Firestore agendas fetch failed.", error);
-    });
-
-    const unsubDownloads = onSnapshot(collection(db, 'downloads'), (snapshot) => {
-      if (!snapshot.empty) {
-        setDownloads(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as DownloadFile)));
-      } else {
-        setDownloads(initialDownloads);
-      }
-    }, (error) => {
-      console.warn("Firestore downloads fetch failed.", error);
-    });
-
-    const unsubFeedbacks = onSnapshot(collection(db, 'feedbacks'), (snapshot) => {
-      if (!snapshot.empty) {
-        setFeedbacks(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as MessageFeedback)));
-      } else {
-        setFeedbacks(initialFeedbacks);
-      }
-    }, (error) => {
-      console.warn("Firestore feedbacks fetch failed.", error);
-    });
-
-    const unsubBooks = onSnapshot(collection(db, 'books'), (snapshot) => {
-      if (!snapshot.empty) {
-        setBooks(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Book)));
-      } else {
-        setBooks(initialBooks);
-      }
-    }, (error) => {
-      console.warn("Firestore books fetch failed.", error);
-    });
-
-    const unsubStudents = onSnapshot(collection(db, 'students'), (snapshot) => {
-      if (!snapshot.empty) {
-        setStudents(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Student)));
-      } else {
-        setStudents(initialStudents);
-      }
-    }, (error) => {
-      console.warn("Firestore students fetch failed.", error);
-    });
-
-    const unsubAlumni = onSnapshot(collection(db, 'alumni'), (snapshot) => {
-      if (!snapshot.empty) {
-        setAlumni(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Alumni)));
-      } else {
-        setAlumni(initialAlumni);
-      }
-    }, (error) => {
-      console.warn("Firestore alumni fetch failed.", error);
-    });
-
-    const unsubLogs = onSnapshot(collection(db, 'activityLogs'), (snapshot) => {
-      if (!snapshot.empty) {
-        const list = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as ActivityLog));
-        list.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-        setActivityLogs(list);
-      } else {
-        setActivityLogs(initialActivityLogs);
-      }
-    }, (error) => {
-      console.warn("Firestore activityLogs fetch failed.", error);
-    });
-
-    return () => {
-      unsubNews();
-      unsubTeachers();
-      unsubGallery();
-      unsubPpdb();
-      unsubAgendas();
-      unsubDownloads();
-      unsubFeedbacks();
-      unsubBooks();
-      unsubStudents();
-      unsubAlumni();
-      unsubLogs();
     };
+    fetchData();
   }, []);
 
-  // 2. Auth Status Listener
-  useEffect(() => {
-    const unsubAuth = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (user.email === 'khairuzzikriii@gmail.com') {
-          setIsAdminLoggedIn(true);
-          localStorage.setItem('man_lhokseumawe_admin_auth', 'true');
-        }
-      }
-    });
-    return unsubAuth;
-  }, []);
 
   // Auth Operations
   // Login via backend API (JWT)
@@ -311,14 +195,6 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Google sign in failed:", error);
-    }
-  };
 
   const logoutAdmin = () => {
     if (adminRole) {
@@ -330,8 +206,7 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
     authService.logout(); // Clear JWT token
     localStorage.removeItem('man_lhokseumawe_admin_auth');
     localStorage.removeItem('man_lhokseumawe_admin_role');
-    signOut(auth).catch((err) => console.warn("Firebase Sign out failed", err));
-  };
+      };
 
   const loginStudent = (name: string, nisn: string) => {
     if (name.trim() && nisn.length >= 5) {
@@ -349,170 +224,76 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
   };
 
   const addActivityLog = (operatorName: string, role: 'Admin Utama' | 'Staf Humas' | 'OSIM', action: string, details: string) => {
-    const logId = `log-${Date.now()}`;
-    const newLogObj: ActivityLog = {
-      id: logId,
-      operatorName,
-      operatorRole: role,
-      action,
-      details,
-      timestamp: new Date().toISOString()
-    };
-    setDoc(doc(db, 'activityLogs', logId), newLogObj)
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `activityLogs/${logId}`));
+    dataService.logService.create({ operatorName, operatorRole: role, action, details, timestamp: new Date().toISOString() } as any).then(data => setActivityLogs(prev => [data, ...prev])).catch(console.error);
   };
 
   const addBook = (item: Omit<Book, 'id'>) => {
-    const id = `book-${Date.now()}`;
-    const newItem = { id, ...item };
-    setDoc(doc(db, 'books', id), newItem)
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Tambah E-Pustaka', `Buku: ${item.title}, ISBN: ${item.isbn}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `books/${id}`));
+    dataService.bookService.create({ ...item } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteBook = (id: string) => {
-    deleteDoc(doc(db, 'books', id))
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Hapus E-Pustaka', `ID Buku: ${id}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `books/${id}`));
+    dataService.bookService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   const addStudent = (item: Omit<Student, 'id'>) => {
-    const id = `stu-${Date.now()}`;
-    const newItem = { id, ...item };
-    setDoc(doc(db, 'students', id), newItem)
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Tambah Data Siswa', `Nama: ${item.name}, NISN: ${item.nisn}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `students/${id}`));
+    dataService.studentService.create({ ...item } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteStudent = (id: string) => {
-    deleteDoc(doc(db, 'students', id))
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Hapus Data Siswa', `ID Siswa: ${id}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `students/${id}`));
+    dataService.studentService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   const addAlumni = (item: Omit<Alumni, 'id'>) => {
-    const id = `alum-${Date.now()}`;
-    const newItem = { id, ...item };
-    setDoc(doc(db, 'alumni', id), newItem)
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Tambah Data Alumni', `Nama: ${item.name}, Angkatan: ${item.graduationYear}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `alumni/${id}`));
+    dataService.alumniService.create({ ...item } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteAlumni = (id: string) => {
-    deleteDoc(doc(db, 'alumni', id))
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Hapus Data Alumni', `ID Alumni: ${id}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `alumni/${id}`));
+    dataService.alumniService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   const updateBook = (id: string, item: Partial<Book>) => {
-    updateDoc(doc(db, 'books', id), item)
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Edit E-Pustaka', `ID Buku: ${id}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `books/${id}`));
+    dataService.bookService.update(id, item).then(() => window.location.reload()).catch(console.error);
   };
 
   const updateStudent = (id: string, item: Partial<Student>) => {
-    updateDoc(doc(db, 'students', id), item)
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Edit Data Siswa', `ID Siswa: ${id}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `students/${id}`));
+    dataService.studentService.update(id, item).then(() => window.location.reload()).catch(console.error);
   };
 
   const updateAlumni = (id: string, item: Partial<Alumni>) => {
-    updateDoc(doc(db, 'alumni', id), item)
-      .then(() => {
-        if (adminRole) {
-          const operator = adminRole === 'Admin Utama' ? 'Drs. H. Sofyan, M.Pd' : adminRole === 'Staf Humas' ? 'Humas MAN Lhokseumawe' : 'Ketua OSIM';
-          addActivityLog(operator, adminRole, 'Edit Data Alumni', `ID Alumni: ${id}`);
-        }
-      })
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `alumni/${id}`));
+    dataService.alumniService.update(id, item).then(() => window.location.reload()).catch(console.error);
   };
 
   // CRUD Actions using Firestore backend (Writes standard entities with strict error checks)
   const addNews = (item: Omit<NewsItem, 'id' | 'views'>) => {
-    const newsId = `news-${Date.now()}`;
-    const newItem = {
-      ...item,
-      views: 0
-    };
-    setDoc(doc(db, 'news', newsId), newItem)
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `news/${newsId}`));
+    dataService.newsService.create({ ...item, views: 0 } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteNews = (id: string) => {
-    deleteDoc(doc(db, 'news', id))
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `news/${id}`));
+    dataService.newsService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   const updateNews = (id: string, item: Partial<NewsItem>) => {
-    updateDoc(doc(db, 'news', id), item)
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `news/${id}`));
+    dataService.newsService.update(id, item).then(() => window.location.reload()).catch(console.error);
   };
 
   const addTeacher = (item: Omit<Teacher, 'id'>) => {
-    const id = `t-${Date.now()}`;
-    setDoc(doc(db, 'teachers', id), item)
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `teachers/${id}`));
+    dataService.teacherService.create({ ...item } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteTeacher = (id: string) => {
-    deleteDoc(doc(db, 'teachers', id))
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `teachers/${id}`));
+    dataService.teacherService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   const updateTeacher = (id: string, item: Partial<Teacher>) => {
-    updateDoc(doc(db, 'teachers', id), item)
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `teachers/${id}`));
+    dataService.teacherService.update(id, item).then(() => window.location.reload()).catch(console.error);
   };
 
   const addGalleryItem = (item: Omit<GalleryItem, 'id'>) => {
-    const id = `g-${Date.now()}`;
-    setDoc(doc(db, 'gallery', id), item)
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `gallery/${id}`));
+    dataService.galleryService.create({ ...item } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteGalleryItem = (id: string) => {
-    deleteDoc(doc(db, 'gallery', id))
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `gallery/${id}`));
+    dataService.galleryService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   // Fetch PPDB data from backend API
@@ -593,66 +374,44 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
   };
 
   const addAgenda = (item: Omit<AcademicAgenda, 'id'>) => {
-    const id = `ag-${Date.now()}`;
-    setDoc(doc(db, 'agendas', id), item)
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `agendas/${id}`));
+    dataService.agendaService.create({ ...item } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteAgenda = (id: string) => {
-    deleteDoc(doc(db, 'agendas', id))
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `agendas/${id}`));
+    dataService.agendaService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   const addDownloadFile = (item: Omit<DownloadFile, 'id' | 'downloadsCount'>) => {
-    const id = `f-${Date.now()}`;
-    const newItem = {
-      ...item,
-      downloadsCount: 0
-    };
-    setDoc(doc(db, 'downloads', id), newItem)
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `downloads/${id}`));
+    dataService.downloadService.create({ ...item, downloadsCount: 0 } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteDownloadFile = (id: string) => {
-    deleteDoc(doc(db, 'downloads', id))
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `downloads/${id}`));
+    dataService.downloadService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   const updateDownloadFile = (id: string, item: Partial<DownloadFile>) => {
-    updateDoc(doc(db, 'downloads', id), item)
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `downloads/${id}`));
+    dataService.downloadService.update(id, item).then(() => window.location.reload()).catch(console.error);
   };
 
   const updateAgenda = (id: string, item: Partial<AcademicAgenda>) => {
-    updateDoc(doc(db, 'agendas', id), item)
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `agendas/${id}`));
+    dataService.agendaService.update(id, item).then(() => window.location.reload()).catch(console.error);
   };
 
   const incrementDownload = (id: string) => {
-    updateDoc(doc(db, 'downloads', id), {
-      downloadsCount: increment(1)
-    }).catch(err => handleFirestoreError(err, OperationType.UPDATE, `downloads/${id}`));
+    const file = downloads.find(d => d.id === id);
+    if(file) dataService.downloadService.update(id, { downloadsCount: file.downloadsCount + 1 }).catch(console.error);
   };
 
   const submitFeedback = (item: Omit<MessageFeedback, 'id' | 'createdAt' | 'read'>) => {
-    const id = `fb-${Date.now()}`;
-    const newFb = {
-      ...item,
-      createdAt: new Date().toISOString(),
-      read: false
-    };
-    setDoc(doc(db, 'feedbacks', id), newFb)
-      .catch(err => handleFirestoreError(err, OperationType.CREATE, `feedbacks/${id}`));
+    dataService.feedbackService.create({ ...item, createdAt: new Date().toISOString(), read: false } as any).then(() => window.location.reload()).catch(console.error);
   };
 
   const markFeedbackRead = (id: string) => {
-    updateDoc(doc(db, 'feedbacks', id), { read: true })
-      .catch(err => handleFirestoreError(err, OperationType.UPDATE, `feedbacks/${id}`));
+    dataService.feedbackService.update(id, { read: true }).then(() => window.location.reload()).catch(console.error);
   };
 
   const deleteFeedback = (id: string) => {
-    deleteDoc(doc(db, 'feedbacks', id))
-      .catch(err => handleFirestoreError(err, OperationType.DELETE, `feedbacks/${id}`));
+    dataService.feedbackService.delete(id).then(() => window.location.reload()).catch(console.error);
   };
 
   return (
@@ -704,8 +463,7 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
       updateAlumni,
       addActivityLog,
       loginAdmin,
-      signInWithGoogle,
-      logoutAdmin,
+            logoutAdmin,
       loginStudent,
       logoutStudent,
       theme,

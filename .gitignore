@@ -6,3 +6,7 @@ coverage/
 *.log
 .env*
 !.env.example
+backend/node_modules/
+backend/uploads/ppdb/*
+!backend/uploads/ppdb/.gitkeep
+.aistudio/

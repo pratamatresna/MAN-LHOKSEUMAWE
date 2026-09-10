@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 
 const authRoutes = require('./routes/authRoutes');
 const ppdbRoutes = require('./routes/ppdbRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
 connectDB();
 
@@ -18,6 +19,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/ppdb', ppdbRoutes);
+app.use('/api', apiRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

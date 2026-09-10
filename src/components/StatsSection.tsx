@@ -34,7 +34,7 @@ export default function StatsSection() {
       id: 'stat-awards',
       label: 'Prestasi Nasional',
       value: '58+',
-      description: 'Medali 3 Tahun Terakhir',
+      description: 'Total Prestasi Nasional',
       icon: Award,
     },
     {
@@ -47,7 +47,7 @@ export default function StatsSection() {
   ];
 
   return (
-    <section className={`py-16 border-y relative transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-950 border-slate-800 text-white' : 'bg-[#f8f9fa] border-slate-100'}`} id="school-stats-section">
+    <section className={`py-16 border-y relative transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-950 border-slate-800 text-white' : 'bg-[#e2f9ed] border-slate-100'}`} id="school-stats-section">
       <div className="absolute inset-0 islamic-pattern pointer-events-none opacity-5"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
