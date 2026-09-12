@@ -20,6 +20,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
+  const [selectedOrgProfile, setSelectedOrgProfile] = useState<{name: string, role: string, desc: string, img: string} | null>(null);
 
   // Filtered Teacher results
   const filteredTeachers = teachers.filter((t) => {
@@ -220,64 +221,150 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
           </div>
 
           {/* Simple Structured responsive Tree Diagram */}
-          <div className="space-y-6 pt-6 overflow-x-auto min-w-[700px] lg:min-w-0 pb-4">
+          <div className="space-y-0 pt-6 overflow-x-auto min-w-[700px] lg:min-w-0 pb-4">
             {/* Level 1: Kepala */}
             <div className="flex justify-center">
-              <div className="bg-brand-green text-white p-4 rounded-xl border border-brand-gold text-center w-64 shadow-md">
-                <p className="text-[10px] font-mono text-brand-gold uppercase tracking-wider font-bold">Kepala Madrasah</p>
+              <div 
+                onClick={() => setSelectedOrgProfile({name: 'Suriya, S. Ag., M.Pd', role: 'Kepala Madrasah', desc: 'Penanggung Jawab Utama & Manajer', img: '/images/Suriya, S.Ag., M.Pd.jpg'})}
+                className="bg-white border-2 border-slate-200 text-slate-800 p-4 rounded-xl text-center w-64 shadow-sm relative z-10 flex flex-col items-center cursor-pointer transition-all hover:bg-brand-gold/15 hover:border-brand-gold hover:shadow-md"
+              >
+                <img src="/images/Suriya, S.Ag., M.Pd.jpg" alt="Kepala Madrasah" className="w-20 h-20 object-cover rounded-full border-2 border-brand-gold mb-3 shadow-sm" />
+                <p className="text-[10px] font-mono text-brand-gold-dark uppercase tracking-wider font-bold">Kepala Madrasah</p>
                 <p className="font-display font-bold text-sm mt-1">Suriya, S. Ag., M.Pd</p>
-                <p className="text-[9px] text-slate-300 font-sans mt-0.5">Penanggung Jawab Utama & Manajer</p>
+                <p className="text-[9px] text-slate-500 font-sans mt-0.5">Penanggung Jawab Utama & Manajer</p>
               </div>
             </div>
 
-            {/* Link line */}
+            {/* Link line to Level 2 */}
             <div className="h-6 w-0.5 bg-slate-300 mx-auto"></div>
+            <div className="w-[256px] h-0.5 bg-slate-300 mx-auto"></div>
+            <div className="w-[256px] mx-auto flex justify-between">
+              <div className="h-4 w-0.5 bg-slate-300"></div>
+              <div className="h-4 w-0.5 bg-slate-300"></div>
+            </div>
 
             {/* Level 2: Komite & Tata Usaha */}
             <div className="flex justify-center space-x-12 relative">
-              <div className="absolute top-1/2 inset-x-1/4 h-0.5 bg-slate-300 -translate-y-1/2 z-0"></div>
-              
-              <div className="bg-brand-gold-light border border-brand-gold text-slate-800 p-3.5 rounded-xl text-center w-52 shadow-sm relative z-10">
+              <div 
+                onClick={() => setSelectedOrgProfile({name: 'H. Muzakir Hasan, Lc', role: 'Ketua Komite Hubungan Orangtua', desc: 'Penasihat Strategis Madrasah', img: '/images/Suriya, S.Ag., M.Pd.jpg'})}
+                className="bg-white border-2 border-slate-200 text-slate-800 p-4 rounded-xl text-center w-52 shadow-sm relative z-10 flex flex-col items-center cursor-pointer transition-all hover:bg-brand-gold/15 hover:border-brand-gold hover:shadow-md"
+              >
+                <img src="/images/Suriya, S.Ag., M.Pd.jpg" alt="Ketua Komite Hubungan Orangtua" className="w-16 h-16 object-cover rounded-full border-2 border-brand-gold-dark mb-3 shadow-sm" />
                 <p className="text-[9px] font-mono text-brand-gold-dark uppercase tracking-wider font-bold">Ketua Komite Hubungan Orangtua</p>
                 <p className="font-display font-bold text-xs mt-1">H. Muzakir Hasan, Lc</p>
                 <p className="text-[9px] text-slate-500 font-sans mt-0.5">Penasihat Strategis Madrasah</p>
               </div>
 
-              <div className="bg-slate-50 border border-slate-200 text-slate-800 p-3.5 rounded-xl text-center w-52 shadow-sm relative z-10">
+              <div 
+                onClick={() => setSelectedOrgProfile({name: 'Nurhabsah, S.Pd', role: 'Kepala Tata Usaha', desc: 'Urusan Administrasi, Keuangan & Sarpras', img: '/images/Nurhabsah, S.Pd.jpg'})}
+                className="bg-white border-2 border-slate-200 text-slate-800 p-4 rounded-xl text-center w-52 shadow-sm relative z-10 flex flex-col items-center cursor-pointer transition-all hover:bg-brand-gold/15 hover:border-brand-gold hover:shadow-md"
+              >
+                <img src="/images/Nurhabsah, S.Pd.jpg" alt="Kepala Tata Usaha" className="w-16 h-16 object-cover rounded-full border-2 border-slate-300 mb-3 shadow-sm" />
                 <p className="text-[9px] font-mono text-slate-500 uppercase tracking-wider font-bold">Kepala Tata Usaha</p>
                 <p className="font-display font-bold text-xs mt-1">Nurhabsah, S.Pd</p>
                 <p className="text-[9px] text-slate-500 font-sans mt-0.5">Urusan Administrasi, Keuangan & Sarpras</p>
               </div>
             </div>
 
-            {/* Link line */}
+            {/* Link line to Level 3 */}
             <div className="h-6 w-0.5 bg-slate-300 mx-auto"></div>
-
+            
             {/* Level 3: Wakil Kepala (Waka) */}
-            <div className="grid grid-cols-4 gap-4 max-w-4xl mx-auto pt-2 relative">
+            <div className="max-w-4xl mx-auto relative">
+              {/* Horizontal line spanning centers of 4 columns (12.5% to 87.5%) */}
               <div className="absolute top-0 inset-x-[12.5%] h-0.5 bg-slate-300 z-0"></div>
               
-              <div className="bg-white border-2 border-brand-green/35 text-slate-800 p-3 rounded-lg text-center shadow-sm relative z-10">
-                <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Kurikulum</p>
-                <p className="font-display font-bold text-xs mt-1">Siscori Sriningsih Mulyati, S.T</p>
-              </div>
+              {/* Vertical drops to each of the 4 boxes */}
+              <div className="absolute top-0 left-[12.5%] h-4 w-0.5 bg-slate-300 -translate-x-1/2"></div>
+              <div className="absolute top-0 left-[37.5%] h-4 w-0.5 bg-slate-300 -translate-x-1/2"></div>
+              <div className="absolute top-0 left-[62.5%] h-4 w-0.5 bg-slate-300 -translate-x-1/2"></div>
+              <div className="absolute top-0 left-[87.5%] h-4 w-0.5 bg-slate-300 -translate-x-1/2"></div>
 
-              <div className="bg-white border-2 border-brand-green/35 text-slate-800 p-3 rounded-lg text-center shadow-sm relative z-10">
-                <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Kesiswaan</p>
-                <p className="font-display font-bold text-xs mt-1">Eny Sahara, S.Pd., M. Pd</p>
-              </div>
+              <div className="grid grid-cols-4 gap-4 pt-4 relative z-10">
+                <div 
+                  onClick={() => setSelectedOrgProfile({name: 'Siscori Sriningsih Mulyati, S.T', role: 'Waka Kurikulum', desc: '', img: '/images/Siscori Sriningsih Mulyati, S.T.jpg'})}
+                  className="bg-white border-2 border-slate-200 text-slate-800 p-3 rounded-lg text-center shadow-sm flex flex-col items-center cursor-pointer transition-all hover:bg-brand-gold/15 hover:border-brand-gold hover:shadow-md"
+                >
+                  <img src="/images/Siscori Sriningsih Mulyati, S.T.jpg" alt="Waka Kurikulum" className="w-14 h-14 object-cover rounded-full border border-brand-green mb-2 shadow-sm" />
+                  <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Kurikulum</p>
+                  <p className="font-display font-bold text-xs mt-1">Siscori Sriningsih Mulyati, S.T</p>
+                </div>
 
-              <div className="bg-white border-2 border-brand-green/35 text-slate-800 p-3 rounded-lg text-center shadow-sm relative z-10">
-                <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Sarpras</p>
-                <p className="font-display font-bold text-xs mt-1">Masrizal, S.Pd.I</p>
-              </div>
+                <div 
+                  onClick={() => setSelectedOrgProfile({name: 'Eny Sahara, S.Pd., M. Pd', role: 'Waka Kesiswaan', desc: '', img: '/images/Eny Sahara, S.Pd., M.Pd.jpg'})}
+                  className="bg-white border-2 border-slate-200 text-slate-800 p-3 rounded-lg text-center shadow-sm flex flex-col items-center cursor-pointer transition-all hover:bg-brand-gold/15 hover:border-brand-gold hover:shadow-md"
+                >
+                  <img src="/images/Eny Sahara, S.Pd., M.Pd.jpg" alt="Waka Kesiswaan" className="w-14 h-14 object-cover rounded-full border border-brand-green mb-2 shadow-sm" />
+                  <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Kesiswaan</p>
+                  <p className="font-display font-bold text-xs mt-1">Eny Sahara, S.Pd., M. Pd</p>
+                </div>
 
-              <div className="bg-white border-2 border-brand-green/35 text-slate-800 p-3 rounded-lg text-center shadow-sm relative z-10">
-                <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Humas</p>
-                <p className="font-display font-bold text-xs mt-1">Fuadi.T, S.Pd.I., M.Pd</p>
+                <div 
+                  onClick={() => setSelectedOrgProfile({name: 'Masrizal, S.Pd.I', role: 'Waka Sarpras', desc: '', img: '/images/Masrizal, S.Pd.I.jpg'})}
+                  className="bg-white border-2 border-slate-200 text-slate-800 p-3 rounded-lg text-center shadow-sm flex flex-col items-center cursor-pointer transition-all hover:bg-brand-gold/15 hover:border-brand-gold hover:shadow-md"
+                >
+                  <img src="/images/Masrizal, S.Pd.I.jpg" alt="Waka Sarpras" className="w-14 h-14 object-cover rounded-full border border-brand-green mb-2 shadow-sm" />
+                  <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Sarpras</p>
+                  <p className="font-display font-bold text-xs mt-1">Masrizal, S.Pd.I</p>
+                </div>
+
+                <div 
+                  onClick={() => setSelectedOrgProfile({name: 'Fuadi.T, S.Pd.I., M.Pd', role: 'Waka Humas', desc: '', img: '/images/Fuadi.T, S.Pd.I., M.Pd.jpg'})}
+                  className="bg-white border-2 border-slate-200 text-slate-800 p-3 rounded-lg text-center shadow-sm flex flex-col items-center cursor-pointer transition-all hover:bg-brand-gold/15 hover:border-brand-gold hover:shadow-md"
+                >
+                  <img src="/images/Fuadi.T, S.Pd.I., M.Pd.jpg" alt="Waka Humas" className="w-14 h-14 object-cover rounded-full border border-brand-green mb-2 shadow-sm" />
+                  <p className="text-[8px] font-mono text-brand-green font-bold uppercase tracking-wider">Waka Humas</p>
+                  <p className="font-display font-bold text-xs mt-1">Fuadi.T, S.Pd.I., M.Pd</p>
+                </div>
               </div>
             </div>
           </div>
+          
+          {/* Org Chart Modal */}
+          {selectedOrgProfile && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm" onClick={() => setSelectedOrgProfile(null)}>
+              <div 
+                className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl transform transition-all relative overflow-hidden"
+                onClick={e => e.stopPropagation()}
+              >
+                <div className="absolute top-0 left-0 w-full h-24 bg-brand-green"></div>
+                <button 
+                  onClick={() => setSelectedOrgProfile(null)}
+                  className="absolute top-3 right-3 text-white hover:text-slate-200 p-1 bg-black/20 rounded-full"
+                >
+                  <X size={18} />
+                </button>
+                
+                <div className="relative pt-6 flex flex-col items-center">
+                  <div className="w-24 h-24 bg-white rounded-full p-1 shadow-lg mb-4 z-10 relative">
+                    <img 
+                      src={selectedOrgProfile.img} 
+                      alt={selectedOrgProfile.name} 
+                      className="w-full h-full object-cover rounded-full border border-slate-100"
+                    />
+                  </div>
+                  
+                  <h3 className="font-display font-black text-xl text-slate-900 text-center">{selectedOrgProfile.name}</h3>
+                  <p className="text-brand-green font-bold text-sm mt-1">{selectedOrgProfile.role}</p>
+                  
+                  {selectedOrgProfile.desc && (
+                    <div className="mt-4 bg-slate-50 border p-3 rounded-lg w-full text-center">
+                      <p className="text-xs text-slate-600 font-medium leading-relaxed">{selectedOrgProfile.desc}</p>
+                    </div>
+                  )}
+                  
+                  <div className="w-full mt-6 pt-4 border-t border-slate-100 flex justify-center">
+                    <button 
+                      onClick={() => setSelectedOrgProfile(null)}
+                      className="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-full transition-colors"
+                    >
+                      Tutup Profil
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
