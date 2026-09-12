@@ -71,7 +71,7 @@ export default function AcademicViews({ subTab }: AcademicViewsProps) {
     {
       id: "futsal",
       name: "Futsal",
-      desc: "Latihan rutin futsal bagi siswa untuk melatih ketangkasan, kerja sama tim, stamina, serta persiapan mengikuti kejuaraan antar sekolah.",
+      desc: "Latihan rutin futsal bagi siswa untuk melatih ketangkasan, kerja sama tim, stamina, serta persiapan mengikuti kejuaraan antar madrasah.",
       img: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80",
       schedule: "Rabu Sore",
       pembimbing: "Guru Olahraga",
@@ -522,7 +522,7 @@ export default function AcademicViews({ subTab }: AcademicViewsProps) {
               >
                 <div className="space-y-3">
                   <div className="inline-block bg-emerald-50 text-brand-green font-mono text-[9px] font-bold px-2 py-0.5 rounded-full border border-emerald-100">
-                    Agenda Sekolah
+                    Agenda Madrasah
                   </div>
                   <h3 className="font-display font-extrabold text-sm sm:text-base text-slate-900 leading-tight">
                     {ag.title}

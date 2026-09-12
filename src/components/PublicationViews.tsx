@@ -104,7 +104,7 @@ export default function PublicationViews({ subTab }: PublicationViewsProps) {
             <div className="text-center space-y-2 mb-4">
               <span className="text-brand-gold font-mono text-xs font-bold uppercase tracking-widest font-bold">INFO TERBARU</span>
               <h2 className="text-2xl sm:text-3xl font-display font-black text-slate-900">
-                {subTab === 'pengumuman' ? 'Pengumuman Resmi Madrasah' : 'Warta berita & Berita Sekolah'}
+                {subTab === 'pengumuman' ? 'Pengumuman Resmi Madrasah' : 'Warta berita & Berita Madrasah'}
               </h2>
               <div className="w-12 h-1 bg-brand-green mx-auto rounded"></div>
             </div>

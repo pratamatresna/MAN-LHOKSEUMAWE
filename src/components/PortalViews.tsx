@@ -91,7 +91,7 @@ export default function PortalViews() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-[11px] font-bold text-slate-700 block select-none">NISN Sekolah (Atau Password Sandi)</label>
+              <label className="text-[11px] font-bold text-slate-700 block select-none">NISN Madrasah (Atau Password Sandi)</label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input 

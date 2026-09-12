@@ -33,12 +33,12 @@ export default function Navbar({ currentTab, setTab, subTab }: NavbarProps) {
     },
     {
       id: 'profil',
-      label: 'Profil Sekolah',
+      label: 'Profil Madrasah',
       hasSub: true,
       subItems: [
         { id: 'sambutan', label: 'Sambutan Kepala Madrasah' },
         { id: 'visi-misi', label: 'Visi & Misi' },
-        { id: 'sejarah', label: 'Sejarah Sekolah' },
+        { id: 'sejarah', label: 'Sejarah Madrasah' },
         { id: 'struktur', label: 'Struktur Organisasi' },
         { id: 'guru', label: 'Data Guru & Staf' },
         { id: 'fasilitas', label: 'Fasilitas Madrasah' },
@@ -163,8 +163,8 @@ export default function Navbar({ currentTab, setTab, subTab }: NavbarProps) {
                           ? 'bg-brand-gold/25 text-brand-gold font-bold'
                           : 'bg-brand-gold/15 text-brand-green font-bold'
                         : theme === 'dark'
-                          ? 'text-slate-300 hover:text-brand-gold'
-                          : 'text-slate-700 hover:text-brand-gold'
+                          ? 'text-slate-300 group-hover/menu:text-brand-gold group-hover/menu:bg-brand-gold/25'
+                          : 'text-slate-700 group-hover/menu:text-brand-green group-hover/menu:bg-brand-gold/15'
                     }`}
                   >
                     <span>{item.label}</span>
@@ -199,11 +199,11 @@ export default function Navbar({ currentTab, setTab, subTab }: NavbarProps) {
                   className={`px-3 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                     currentTab === item.id 
                       ? theme === 'dark'
-                        ? 'bg-brand-gold text-slate-950 font-bold shadow-sm'
-                        : 'bg-brand-gold text-brand-green font-bold shadow-sm' 
+                        ? 'bg-brand-gold/25 text-brand-gold font-bold'
+                        : 'bg-brand-gold/15 text-brand-green font-bold'
                       : theme === 'dark'
-                        ? 'text-slate-300 hover:text-brand-gold'
-                        : 'text-slate-700 hover:text-brand-gold'
+                        ? 'text-slate-300 hover:text-brand-gold hover:bg-brand-gold/25'
+                        : 'text-slate-700 hover:text-brand-green hover:bg-brand-gold/15'
                   }`}
                 >
                   {item.label}

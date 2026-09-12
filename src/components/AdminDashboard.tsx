@@ -491,7 +491,7 @@ export default function AdminDashboard() {
                   { id: 'manajemen-data', label: 'Manajemen Data' },
                   { id: 'teachers', label: 'Kelola Guru & Staf' },
                   { id: 'downloads', label: 'Kelola File Unduhan' },
-                  { id: 'agenda', label: 'Kelola Agenda Sekolah' },
+                  { id: 'agenda', label: 'Kelola Agenda Madrasah' },
                   { id: 'feedback', label: 'Kotak Masuk Aduan', badge: feedbacks.filter(f => !f.read).length },
                   { id: 'activity-logs', label: 'Log Aktivitas' }
                 ];
@@ -584,7 +584,7 @@ export default function AdminDashboard() {
 
                 <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-150 text-xs text-slate-700 leading-relaxed font-sans mt-4">
                   <p className="font-bold">💡 Petunjuk Penggunaan CMS:</p>
-                  <p className="mt-1">Pilih sub-menu vertikal sebelah kiri untuk menyunting dan memperbarui data website resmi secara instan. Menambahkan warta berita akan segera terpajang langsung di halaman Beranda bagi pengunjung sekolah.</p>
+                  <p className="mt-1">Pilih sub-menu vertikal sebelah kiri untuk menyunting dan memperbarui data website resmi secara instan. Menambahkan warta berita akan segera terpajang langsung di halaman Beranda bagi pengunjung madrasah.</p>
                 </div>
               </div>
             )}
@@ -603,7 +603,7 @@ export default function AdminDashboard() {
                         <tr className="bg-slate-50 border-b text-slate-500 font-bold font-mono">
                           <th className="p-3">Ref sequence</th>
                           <th className="p-3">Calon Siswa</th>
-                          <th className="p-3">Asal Sekolah & NISN</th>
+                          <th className="p-3">Asal Madrasah & NISN</th>
                           <th className="p-3 text-center">Rata Rapor</th>
                           <th className="p-3 text-center">Berkas Status</th>
                           <th className="p-3 text-center">Tindakan Persetujuan</th>
@@ -859,7 +859,7 @@ export default function AdminDashboard() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-slate-650 block select-none">Jabatan Sekolah *</label>
+                      <label className="text-[10px] font-bold text-slate-650 block select-none">Jabatan Madrasah *</label>
                       <input 
                         type="text" 
                         required

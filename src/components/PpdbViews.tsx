@@ -315,13 +315,13 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="space-y-1">
-                      <label className="text-[11px] font-bold text-slate-700 block select-none">Sekolah Asal (SMP/MTs) *</label>
+                      <label className="text-[11px] font-bold text-slate-700 block select-none">Madrasah Asal (SMP/MTs) *</label>
                       <input 
                         type="text" 
                         required
                         value={schoolOrigin}
                         onChange={(e) => setSchoolOrigin(e.target.value)}
-                        placeholder="Nama sekolah asal..."
+                        placeholder="Nama madrasah asal..."
                         className="w-full p-2.5 border text-xs text-slate-800 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-green"
                       />
                     </div>
@@ -598,7 +598,7 @@ export default function PpdbViews({ subTab }: PpdbViewsProps) {
                       <span className="font-mono text-slate-700">{matchedRecord.nisn}</span>
                     </div>
                     <div>
-                      <span className="text-slate-400 font-medium block">Sekolah Asal:</span>
+                      <span className="text-slate-400 font-medium block">Madrasah Asal:</span>
                       <span className="font-semibold text-slate-800">{matchedRecord.schoolOrigin}</span>
                     </div>
                     <div>

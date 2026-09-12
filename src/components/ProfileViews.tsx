@@ -58,78 +58,79 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
       {/* 1. SAMBUTAN KEPALA MADRASAH */}
       {subTab === 'sambutan' && (
         <div className="bg-white border rounded-2xl shadow-sm p-6 sm:p-10" id="profile-sambutan">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12 items-start">
-            <div className="lg:col-span-1 text-center">
-              <div className="relative inline-block rounded-2xl overflow-hidden border-4 border-brand-green shadow-xl max-w-xs mx-auto">
-                <img 
-                  src="/images/kepsek.jpg"
-                  alt="Suriya, S. Ag., M.Pd"
-                  className="w-full h-auto object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
-                  <p className="font-display font-bold text-sm">Suriya, S. Ag., M.Pd</p>
-                  <p className="text-[10px] text-brand-gold font-mono uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
-                </div>
+          <div className="flex flex-col space-y-12">
+            {/* Video Sambutan (At Atas) */}
+            <div className="w-full">
+              <h3 className="text-xl font-display font-black text-slate-800 mb-6 text-center">
+                Video Sambutan Kepala Madrasah
+              </h3>
+              <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl overflow-hidden bg-slate-900 shadow-lg border border-slate-200">
+                <iframe 
+                  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                  title="Sambutan Kepala Madrasah" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowFullScreen
+                  className="w-full h-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px]"
+                ></iframe>
               </div>
-              <p className="text-xs font-mono text-slate-500 mt-4 leading-relaxed">&nbsp;</p>
+              <p className="text-[10px] text-slate-400 mt-3 font-mono text-center">* Catatan: Ini adalah video placeholder sementara.</p>
             </div>
-            
-            <div className="lg:col-span-2 space-y-5">
-              <span className="bg-brand-green/10 text-brand-green font-mono text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                Sambutan Resmi
-              </span>
-              <h2 className="text-2xl sm:text-3.5xl font-display font-black text-slate-900 leading-tight">
-                Membentuk Generasi Madani Unggul & Kompetitif
-              </h2>
-              <div className="w-12 h-1 bg-brand-gold rounded"></div>
-              
-              <div className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 font-sans">
-                <p className="font-semibold italic text-emerald-800">
-                  Assalamu’alaikum Warahmatullahi Wabarakatuh,
-                </p>
-                <p>
-                  Puji syukur senantiasa kita panjatkan ke hadirat Allah Subhanahu Wa Ta’ala atas curahan rahmat, hidayah, dan bimbingan-Nya sehingga website resmi MAN Kota Lhokseumawe ini dapat hadir sebagai jendela informasi bagi masyarakat luas. Shalawat beserta salam semoga senantiasa terlimpah-curahkan kepada junjungan alam Nabi Besar Muhammad Shallallahu ‘Alaihi Wassalam.
-                </p>
-                <p>
-                  Di era transformasi digital yang melaju begitu pesat, madrasah dituntut untuk berdiri di baris terdepan dalam menyelaraskan ilmu pengetahuan teknologi (sains) dengan kecerdasan spiritual berbasis akhlak karimah. Website ini bukan sekadar media publikasi statis, melainkan representasi ekosistem pendidikan kami yang terintegrasi, transparan, dan berdaya guna.
-                </p>
-                <p>
-                  MAN Kota Lhokseumawe terus berkomitmen memberikan layanan pembelajaran bermutu prima, membina iklim penelitian (riset) mandiri remaja, serta mengukuhkan kompetensi keagamaan siswa melalui penguatan materi kitab rujukan (Tafsir, Hadits, Fiqih) dan program akselerasi Tahfidz Qur’an. Kami bersiap mengantarkan putra-putri terbaik bangsa menggapai perguruan tinggi impian sekaligus menjadi pilar peradaban Islam yang moderat dan unggul.
-                </p>
-                <p className="font-medium pt-4">
-                  Wassalamu’alaikum Warahmatullahi Wabarakatuh.
-                </p>
-              </div>
 
-              {/* Signature Section */}
-              <div className="border-t pt-5 mt-6 flex justify-between items-center flex-wrap">
-                <div>
-                  <p className="text-xs text-slate-500 font-medium">Tertanda,</p>
-                  <p className="font-display font-extrabold text-slate-900 mt-1">Suriya, S. Ag., M.Pd</p>
-                  <p className="text-xs text-brand-green font-mono font-bold uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
-                </div>
-                <div className="w-24 h-12 opacity-40 border-b border-brand-green border-dashed flex items-center justify-center text-[10px] font-mono select-none">
-                  [ Tanda Tangan ]
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12 items-start border-t border-slate-100 pt-10">
+              <div className="lg:col-span-1 text-center">
+                <div className="relative inline-block rounded-2xl overflow-hidden border-4 border-brand-green shadow-xl max-w-xs mx-auto">
+                  <img 
+                    src="/images/kepsek.jpg"
+                    alt="Suriya, S. Ag., M.Pd"
+                    className="w-full h-auto object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                    <p className="font-display font-bold text-sm">Suriya, S. Ag., M.Pd</p>
+                    <p className="text-[10px] text-brand-gold font-mono uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
+                  </div>
                 </div>
               </div>
               
-              {/* Video Sambutan */}
-              <div className="pt-6 mt-6 border-t">
-                <h3 className="text-sm font-display font-bold text-slate-800 mb-4">
-                  Video Sambutan Kepala Madrasah
-                </h3>
-                <div className="aspect-w-16 aspect-h-9 w-full rounded-xl overflow-hidden bg-slate-100 shadow-sm border border-slate-200">
-                  <iframe 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                    title="Sambutan Kepala Madrasah" 
-                    frameBorder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowFullScreen
-                    className="w-full h-full min-h-[300px]"
-                  ></iframe>
+              <div className="lg:col-span-2 space-y-5">
+                <span className="bg-brand-green/10 text-brand-green font-mono text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  Sambutan Resmi
+                </span>
+                <h2 className="text-2xl sm:text-3.5xl font-display font-black text-slate-900 leading-tight">
+                  Membentuk Generasi Madani Unggul & Kompetitif
+                </h2>
+                <div className="w-12 h-1 bg-brand-gold rounded"></div>
+                
+                <div className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 font-sans">
+                  <p className="font-semibold italic text-emerald-800">
+                    Assalamu’alaikum Warahmatullahi Wabarakatuh,
+                  </p>
+                  <p>
+                    Puji syukur senantiasa kita panjatkan ke hadirat Allah Subhanahu Wa Ta’ala atas curahan rahmat, hidayah, dan bimbingan-Nya sehingga website resmi MAN Kota Lhokseumawe ini dapat hadir sebagai jendela informasi bagi masyarakat luas. Shalawat beserta salam semoga senantiasa terlimpah-curahkan kepada junjungan alam Nabi Besar Muhammad Shallallahu ‘Alaihi Wassalam.
+                  </p>
+                  <p>
+                    Di era transformasi digital yang melaju begitu pesat, madrasah dituntut untuk berdiri di baris terdepan dalam menyelaraskan ilmu pengetahuan teknologi (sains) dengan kecerdasan spiritual berbasis akhlak karimah. Website ini bukan sekadar media publikasi statis, melainkan representasi ekosistem pendidikan kami yang terintegrasi, transparan, dan berdaya guna.
+                  </p>
+                  <p>
+                    MAN Kota Lhokseumawe terus berkomitmen memberikan layanan pembelajaran bermutu prima, membina iklim penelitian (riset) mandiri remaja, serta mengukuhkan kompetensi keagamaan siswa melalui penguatan materi kitab rujukan (Tafsir, Hadits, Fiqih) dan program akselerasi Tahfidz Qur’an. Kami bersiap mengantarkan putra-putri terbaik bangsa menggapai perguruan tinggi impian sekaligus menjadi pilar peradaban Islam yang moderat dan unggul.
+                  </p>
+                  <p className="font-medium pt-4">
+                    Wassalamu’alaikum Warahmatullahi Wabarakatuh.
+                  </p>
                 </div>
-                <p className="text-[10px] text-slate-400 mt-2 font-mono">* Catatan: Ini adalah video placeholder sementara.</p>
+
+                {/* Signature Section */}
+                <div className="border-t pt-5 mt-6 flex justify-between items-center flex-wrap">
+                  <div>
+                    <p className="text-xs text-slate-500 font-medium">Tertanda,</p>
+                    <p className="font-display font-extrabold text-slate-900 mt-1">Suriya, S. Ag., M.Pd</p>
+                    <p className="text-xs text-brand-green font-mono font-bold uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
+                  </div>
+                  <div className="w-24 h-12 opacity-40 border-b border-brand-green border-dashed flex items-center justify-center text-[10px] font-mono select-none">
+                    [ Tanda Tangan ]
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -183,7 +184,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
         </div>
       )}
 
-      {/* 3. SEJARAH SEKOLAH */}
+      {/* 3. SEJARAH MADRASAH */}
       {subTab === 'sejarah' && (
         <div className="bg-white border rounded-2xl p-6 sm:p-10 shadow-sm space-y-6 max-w-4xl mx-auto" id="profile-sejarah">
           <div className="text-center max-w-xl mx-auto space-y-2">
@@ -200,7 +201,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
               "Dari sebuah rintisan pemukiman sarana belajar sederhana di pusat kota, MAN Kota Lhokseumawe kini bertumbuh pesat menjadi icon madrasah modern kebanggaan masyarakat Kota Lhokseumawe, Aceh Utara, dan wilayah sekitarnya."
             </p>
             <p>
-              Seiring dinamika pemerintahan otonom pembentukan kota administratif Kota Lhokseumawe secara mandiri pada tahun 2001, MAN Kota Lhokseumawe terus menata kemandirian manajemen sekolah, memperluas pembangunan laboratorium komputer, ruang riset, dan memperbanyak kuota kelas unggulan serta asrama siswa tahfidz.
+              Seiring dinamika pemerintahan otonom pembentukan kota administratif Kota Lhokseumawe secara mandiri pada tahun 2001, MAN Kota Lhokseumawe terus menata kemandirian manajemen madrasah, memperluas pembangunan laboratorium komputer, ruang riset, dan memperbanyak kuota kelas unggulan serta asrama siswa tahfidz.
             </p>
             <p>
               Kini, di era Revolusi Industri 4.0, madrasah telah bermetamorfosis sempurna dengan mengintegrasikan sistem pembelajaran asinkronus (E-learning), komputerisasi Computer-Based Test (CBT), pendirian studio podcast sains, serta berhasil meraih akreditasi "A" Unggul berkali-kali secara konsisten dari Badan Akreditasi Nasional Sekolah/Madrasah.
@@ -239,7 +240,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
               <div className="bg-brand-gold-light border border-brand-gold text-slate-800 p-3.5 rounded-xl text-center w-52 shadow-sm relative z-10">
                 <p className="text-[9px] font-mono text-brand-gold-dark uppercase tracking-wider font-bold">Ketua Komite Hubungan Orangtua</p>
                 <p className="font-display font-bold text-xs mt-1">H. Muzakir Hasan, Lc</p>
-                <p className="text-[9px] text-slate-500 font-sans mt-0.5">Penasihat Strategis Sekolah</p>
+                <p className="text-[9px] text-slate-500 font-sans mt-0.5">Penasihat Strategis Madrasah</p>
               </div>
 
               <div className="bg-slate-50 border border-slate-200 text-slate-800 p-3.5 rounded-xl text-center w-52 shadow-sm relative z-10">
