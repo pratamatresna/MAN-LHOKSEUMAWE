@@ -81,7 +81,7 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
               <div className="lg:col-span-1 text-center">
                 <div className="relative inline-block rounded-2xl overflow-hidden border-4 border-brand-green shadow-xl max-w-xs mx-auto">
                   <img 
-                    src="/images/kepsek.jpg"
+                    src="/images/Kepsek_adat_aceh.jpegc"
                     alt="Suriya, S. Ag., M.Pd"
                     className="w-full h-auto object-cover"
                     referrerPolicy="no-referrer"

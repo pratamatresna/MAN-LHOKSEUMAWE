@@ -99,7 +99,7 @@ function HomepageLayout({ setTab, news, agendas }: HomepageProps) {
           <div className="lg:col-span-4 flex flex-col items-center text-center space-y-3.5">
             <div className={`w-56 h-56 rounded-full overflow-hidden border-4 border-brand-gold shadow-lg transform hover:rotate-3 transition-all duration-300 ${theme === 'dark' ? 'bg-slate-850' : 'bg-white'}`}>
               <img 
-                src="/images/kepsek.jpg"
+                src="/images/Kepsek_adat_aceh.jpeg"
                 alt="Kepala Madrasah MAN Kota Lhokseumawe"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
