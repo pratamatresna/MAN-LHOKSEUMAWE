@@ -246,12 +246,12 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
             {/* Level 2: Komite & Tata Usaha */}
             <div className="flex justify-center space-x-12 relative">
               <div 
-                onClick={() => setSelectedOrgProfile({name: 'H. Muzakir Hasan, Lc', role: 'Ketua Komite Hubungan Orangtua', desc: 'Penasihat Strategis Madrasah', img: '/images/Suriya, S.Ag., M.Pd.jpg'})}
+                onClick={() => setSelectedOrgProfile({name: 'Muhammad Rahmat,S.HI, M.H.', role: 'Ketua Komite Hubungan Orangtua', desc: 'Penasihat Strategis Madrasah', img: '/images/Muhammad Rahmat,S.HI, M.H..png'})}
                 className="bg-white border-2 border-slate-200 text-slate-800 p-4 rounded-xl text-center w-52 shadow-sm relative z-10 flex flex-col items-center cursor-pointer transition-all hover:bg-brand-gold/15 hover:border-brand-gold hover:shadow-md"
               >
                 <img src="/images/Suriya, S.Ag., M.Pd.jpg" alt="Ketua Komite Hubungan Orangtua" className="w-16 h-16 object-cover rounded-full border-2 border-brand-gold-dark mb-3 shadow-sm" />
                 <p className="text-[9px] font-mono text-brand-gold-dark uppercase tracking-wider font-bold">Ketua Komite Hubungan Orangtua</p>
-                <p className="font-display font-bold text-xs mt-1">H. Muzakir Hasan, Lc</p>
+                <p className="font-display font-bold text-xs mt-1">Muhammad Rahmat,S.HI, M.H.</p>
                 <p className="text-[9px] text-slate-500 font-sans mt-0.5">Penasihat Strategis Madrasah</p>
               </div>
 
