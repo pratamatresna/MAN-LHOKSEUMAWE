@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useSchool } from '../context/SchoolContext';
 import { Teacher } from '../types';
 import { 
   Award, ShieldCheck, MapPin, Search, Filter, BookOpen, 
-  School, Compass, CheckCircle2, FileText, Layout, X
+  School, Compass, CheckCircle2, FileText, Layout, X,
+  Play, UserRound
 } from 'lucide-react';
 
 interface ProfileViewsProps {
@@ -21,6 +22,25 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
   const [selectedOrgProfile, setSelectedOrgProfile] = useState<{name: string, role: string, desc: string, img: string} | null>(null);
+  const [sambutanView, setSambutanView] = useState<'video' | 'text'>('video');
+  const sambutanTopRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTop = () => {
+    const el = sambutanTopRef.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 110;
+    window.scrollTo({ top, behavior: 'smooth' });
+  };
+
+  const switchToText = () => {
+    setSambutanView('text');
+    setTimeout(scrollToTop, 50);
+  };
+
+  const switchToVideo = () => {
+    setSambutanView('video');
+    setTimeout(scrollToTop, 50);
+  };
 
   // Filtered Teacher results
   const filteredTeachers = teachers.filter((t) => {
@@ -58,85 +78,152 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" id="profile-container">
       {/* 1. SAMBUTAN KEPALA MADRASAH */}
       {subTab === 'sambutan' && (
-        <div className="bg-white border rounded-2xl shadow-sm p-6 sm:p-10" id="profile-sambutan">
-          <div className="flex flex-col space-y-12">
-            {/* Video Sambutan (At Atas) */}
-            <div className="w-full">
-              <h3 className="text-xl font-display font-black text-slate-800 mb-6 text-center">
-                Video Sambutan Kepala Madrasah
-              </h3>
-              <div className="aspect-w-16 aspect-h-9 w-full rounded-2xl overflow-hidden bg-slate-900 shadow-lg border border-slate-200">
-                <iframe 
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                  title="Sambutan Kepala Madrasah" 
-                  frameBorder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                  allowFullScreen
-                  className="w-full h-full min-h-[300px] sm:min-h-[400px] md:min-h-[500px]"
-                ></iframe>
-              </div>
-              <p className="text-[10px] text-slate-400 mt-3 font-mono text-center">* Catatan: Ini adalah video placeholder sementara.</p>
-            </div>
+        <div ref={sambutanTopRef} className="bg-white border rounded-2xl shadow-sm p-6 sm:p-10" id="profile-sambutan">
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12 items-start border-t border-slate-100 pt-10">
-              <div className="lg:col-span-1 text-center">
-                <div className="relative inline-block rounded-2xl overflow-hidden border-4 border-brand-green shadow-xl max-w-xs mx-auto">
-                  <img 
-                    src="/images/Kepsek_adat_aceh.jpeg"
-                    alt="Suriya, S. Ag., M.Pd"
-                    className="w-full h-auto object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
-                    <p className="font-display font-bold text-sm">Suriya, S. Ag., M.Pd</p>
-                    <p className="text-[10px] text-brand-gold font-mono uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="lg:col-span-2 space-y-5">
-                <span className="bg-brand-green/10 text-brand-green font-mono text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  Sambutan Resmi
-                </span>
-                <h2 className="text-2xl sm:text-3.5xl font-display font-black text-slate-900 leading-tight">
-                  Membentuk Generasi Madani Unggul & Kompetitif
-                </h2>
-                <div className="w-12 h-1 bg-brand-gold rounded"></div>
-                
-                <div className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 font-sans">
-                  <p className="font-semibold italic text-emerald-800">
-                    Assalamu’alaikum Warahmatullahi Wabarakatuh,
-                  </p>
-                  <p>
-                    Puji syukur senantiasa kita panjatkan ke hadirat Allah Subhanahu Wa Ta’ala atas curahan rahmat, hidayah, dan bimbingan-Nya sehingga website resmi MAN Kota Lhokseumawe ini dapat hadir sebagai jendela informasi bagi masyarakat luas. Shalawat beserta salam semoga senantiasa terlimpah-curahkan kepada junjungan alam Nabi Besar Muhammad Shallallahu ‘Alaihi Wassalam.
-                  </p>
-                  <p>
-                    Di era transformasi digital yang melaju begitu pesat, madrasah dituntut untuk berdiri di baris terdepan dalam menyelaraskan ilmu pengetahuan teknologi (sains) dengan kecerdasan spiritual berbasis akhlak karimah. Website ini bukan sekadar media publikasi statis, melainkan representasi ekosistem pendidikan kami yang terintegrasi, transparan, dan berdaya guna.
-                  </p>
-                  <p>
-                    MAN Kota Lhokseumawe terus berkomitmen memberikan layanan pembelajaran bermutu prima, membina iklim penelitian (riset) mandiri remaja, serta mengukuhkan kompetensi keagamaan siswa melalui penguatan materi kitab rujukan (Tafsir, Hadits, Fiqih) dan program akselerasi Tahfidz Qur’an. Kami bersiap mengantarkan putra-putri terbaik bangsa menggapai perguruan tinggi impian sekaligus menjadi pilar peradaban Islam yang moderat dan unggul.
-                  </p>
-                  <p className="font-medium pt-4">
-                    Wassalamu’alaikum Warahmatullahi Wabarakatuh.
-                  </p>
-                </div>
-
-                {/* Signature Section */}
-                <div className="border-t pt-5 mt-6 flex justify-between items-center flex-wrap">
-                  <div>
-                    <p className="text-xs text-slate-500 font-medium">Tertanda,</p>
-                    <p className="font-display font-extrabold text-slate-900 mt-1">Suriya, S. Ag., M.Pd</p>
-                    <p className="text-xs text-brand-green font-mono font-bold uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
-                  </div>
-                  <div className="w-24 h-12 opacity-40 border-b border-brand-green border-dashed flex items-center justify-center text-[10px] font-mono select-none">
-                    [ Tanda Tangan ]
-                  </div>
-                </div>
-              </div>
+          {/* ── Toggle Pill Tabs ── */}
+          <div className="flex items-center justify-center mb-8">
+            <div className="inline-flex bg-slate-100 rounded-full p-1 gap-1 shadow-inner">
+              <button
+                onClick={switchToVideo}
+                className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  sambutanView === 'video'
+                    ? 'bg-brand-green text-white shadow-md scale-[1.03]'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                <Play size={14} />
+                Video Sambutan
+              </button>
+              <button
+                onClick={switchToText}
+                className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  sambutanView === 'text'
+                    ? 'bg-brand-green text-white shadow-md scale-[1.03]'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                <UserRound size={14} />
+                Sambutan Kepala
+              </button>
             </div>
           </div>
+
+          {/* ── VIDEO VIEW ── */}
+          {sambutanView === 'video' && (
+            <div>
+              <div className="w-full rounded-2xl overflow-hidden bg-slate-900 shadow-lg border border-slate-200">
+                <iframe
+                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  title="Sambutan Kepala Madrasah"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full min-h-[300px] sm:min-h-[450px] md:min-h-[560px]"
+                />
+              </div>
+              <p className="text-[10px] text-slate-400 mt-3 font-mono text-center">
+                * Catatan: Ini adalah video placeholder sementara.
+              </p>
+
+              {/* ── Tombol baca sambutan di bawah video ── */}
+              <div className="mt-8 flex justify-center">
+                <button
+                  onClick={switchToText}
+                  className="group flex items-center gap-3 bg-white border-2 border-brand-green rounded-2xl px-6 py-4 shadow hover:shadow-lg hover:bg-brand-green transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden border-2 border-brand-green/30 group-hover:border-white/50 flex-shrink-0 transition-all duration-300">
+                    <img
+                      src="/images/Kepsek_adat_aceh.jpeg"
+                      alt="Kepala Madrasah"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs text-slate-500 group-hover:text-white/70 font-mono uppercase tracking-wider transition-colors duration-300">Baca Sambutan</p>
+                    <p className="font-display font-bold text-slate-800 group-hover:text-white text-sm transition-colors duration-300">Suriya, S. Ag., M.Pd</p>
+                  </div>
+                  <UserRound size={18} className="text-brand-green group-hover:text-white ml-2 transition-colors duration-300" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ── SAMBUTAN TEXT VIEW ── */}
+          {sambutanView === 'text' && (
+            <div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12 items-start">
+                {/* Foto Kepala */}
+                <div className="lg:col-span-1 text-center">
+                  <div className="relative inline-block rounded-2xl overflow-hidden border-4 border-brand-green shadow-xl max-w-xs mx-auto">
+                    <img
+                      src="/images/Kepsek_adat_aceh.jpeg"
+                      alt="Suriya, S. Ag., M.Pd"
+                      className="w-full h-auto object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                      <p className="font-display font-bold text-sm">Suriya, S. Ag., M.Pd</p>
+                      <p className="text-[10px] text-brand-gold font-mono uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
+                    </div>
+                  </div>
+
+                  {/* Tombol kembali ke video di bawah foto */}
+                  <button
+                    onClick={switchToVideo}
+                    className="mt-5 inline-flex items-center gap-2 text-xs text-slate-500 hover:text-brand-green border border-slate-200 hover:border-brand-green px-4 py-2 rounded-full transition-all duration-200"
+                  >
+                    <Play size={12} />
+                    Tonton Video
+                  </button>
+                </div>
+
+                {/* Teks Sambutan */}
+                <div className="lg:col-span-2 space-y-5">
+                  <span className="bg-brand-green/10 text-brand-green font-mono text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Sambutan Resmi
+                  </span>
+                  <h2 className="text-2xl sm:text-3.5xl font-display font-black text-slate-900 leading-tight">
+                    Membentuk Generasi Madani Unggul & Kompetitif
+                  </h2>
+                  <div className="w-12 h-1 bg-brand-gold rounded"></div>
+
+                  <div className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 font-sans">
+                    <p className="font-semibold italic text-emerald-800">
+                      Assalamu'alaikum Warahmatullahi Wabarakatuh,
+                    </p>
+                    <p>
+                      Puji syukur senantiasa kita panjatkan ke hadirat Allah Subhanahu Wa Ta'ala atas curahan rahmat, hidayah, dan bimbingan-Nya sehingga website resmi MAN Kota Lhokseumawe ini dapat hadir sebagai jendela informasi bagi masyarakat luas. Shalawat beserta salam semoga senantiasa terlimpah-curahkan kepada junjungan alam Nabi Besar Muhammad Shallallahu 'Alaihi Wassalam.
+                    </p>
+                    <p>
+                      Di era transformasi digital yang melaju begitu pesat, madrasah dituntut untuk berdiri di baris terdepan dalam menyelaraskan ilmu pengetahuan teknologi (sains) dengan kecerdasan spiritual berbasis akhlak karimah. Website ini bukan sekadar media publikasi statis, melainkan representasi ekosistem pendidikan kami yang terintegrasi, transparan, dan berdaya guna.
+                    </p>
+                    <p>
+                      MAN Kota Lhokseumawe terus berkomitmen memberikan layanan pembelajaran bermutu prima, membina iklim penelitian (riset) mandiri remaja, serta mengukuhkan kompetensi keagamaan siswa melalui penguatan materi kitab rujukan (Tafsir, Hadits, Fiqih) dan program akselerasi Tahfidz Qur'an. Kami bersiap mengantarkan putra-putri terbaik bangsa menggapai perguruan tinggi impian sekaligus menjadi pilar peradaban Islam yang moderat dan unggul.
+                    </p>
+                    <p className="font-medium pt-4">
+                      Wassalamu'alaikum Warahmatullahi Wabarakatuh.
+                    </p>
+                  </div>
+
+                  {/* Signature */}
+                  <div className="border-t pt-5 mt-6 flex justify-between items-center flex-wrap">
+                    <div>
+                      <p className="text-xs text-slate-500 font-medium">Tertanda,</p>
+                      <p className="font-display font-extrabold text-slate-900 mt-1">Suriya, S. Ag., M.Pd</p>
+                      <p className="text-xs text-brand-green font-mono font-bold uppercase tracking-wider">Kepala MAN Kota Lhokseumawe</p>
+                    </div>
+                    <div className="w-24 h-12 opacity-40 border-b border-brand-green border-dashed flex items-center justify-center text-[10px] font-mono select-none">
+                      [ Tanda Tangan ]
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       )}
+
 
       {/* 2. VISI & MISI */}
       {subTab === 'visi-misi' && (
