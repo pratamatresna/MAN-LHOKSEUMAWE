@@ -652,107 +652,252 @@ export default function ProfileViews({ subTab }: ProfileViewsProps) {
 
       {/* 8. ZONA INTEGRITAS (ZI) */}
       {subTab === 'zi' && (
-        <div className="space-y-8" id="profile-zi">
-          <div className="text-center space-y-2 mb-8">
-            <span className="text-brand-gold font-mono text-xs font-bold uppercase tracking-widest font-bold">ZONA INTEGRITAS (ZI)</span>
-            <h2 className="text-2xl sm:text-3xl font-display font-black text-slate-900">Pembangunan Wilayah Bebas dari Korupsi (WBK)</h2>
-            <div className="w-12 h-1 bg-brand-green mx-auto rounded"></div>
-            <p className="text-xs text-slate-500 max-w-xl mx-auto mt-2">Komitmen MAN Kota Lhokseumawe menuju Wilayah Bebas dari Korupsi (WBK) dan Wilayah Birokrasi Bersih Melayani (WBBM) Kementerian Agama RI.</p>
-          </div>
-
-          <div className="bg-slate-50 border rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 shadow-sm">
-            <div className="w-16 h-16 rounded-full bg-[#E6F4EA] flex items-center justify-center shrink-0 border border-[#CEECD3]">
-              <ShieldCheck className="w-9 h-9 text-brand-green" />
+        <div className="space-y-6" id="profile-zi">
+          <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
+            <div className="flex items-center">
+              {/* Person-on-computer icon styled with app theme */}
+              <div className="w-12 h-12 bg-brand-green/10 rounded-full flex items-center justify-center mr-2">
+                <span className="text-2xl text-brand-green">👨‍💻</span>
+              </div>
             </div>
-            <div className="space-y-1.5 flex-1">
-              <h3 className="font-display font-extrabold text-[#1E293B] text-base leading-tight">Maklumat Pelayanan & Anti-Gratifikasi</h3>
-              <p className="text-xs text-slate-600 leading-relaxed font-sans">
-                "Kami seluruh ASN dan Staf MAN Kota Lhokseumawe bertekad menyelenggarakan pelayanan publik dengan bersih, ramah, tertib, dan transparan. Kami berkomitmen menolak segala bentuk suap, pungutan liar, gratifikasi barang/jasa, serta nepotisme demi keadilan pendidikan umat."
-              </p>
-            </div>
-            <div className="shrink-0 w-full md:w-auto">
-              <button 
-                onClick={() => alert('Mengunduh dokumen "Pakta Integritas Madrasah.pdf". Berkas tersimpan di folder download Anda.')}
-                className="w-full px-4 py-2.5 bg-brand-green hover:bg-brand-green-light border border-brand-gold shadow text-white font-sans font-bold text-xs rounded-xl flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <FileText className="w-4 h-4" />
-                <span>Unduh Pakta Integritas</span>
-              </button>
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+              <h2 className="text-lg md:text-xl font-display font-black text-slate-900">Penilaian Mandiri Pembangunan Zona Integritas Tahun 2026</h2>
+              <span className="bg-brand-gold text-white px-3 py-1 rounded text-xs shadow-sm font-bold whitespace-nowrap uppercase tracking-wider">Sesuai Permenpan 90 Tahun 2021</span>
             </div>
           </div>
-
-          {/* Grid of the 6 Areas */}
-          <div>
-            <h3 className="text-xs font-mono font-bold text-brand-gold uppercase tracking-widest mb-4">6 Area Kerja Pilar ZI</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  area: 'Area I',
-                  title: 'Manajemen Perubahan',
-                  desc: 'Penyusunan tim pembangunan ZI, sosialisasi kesadaran budaya anti-korupsi berkala, serta evaluasi rencana agen perubahan madrasah.',
-                  doc: 'Bukti Rencana Kerja Area I.pdf',
-                  size: '420 KB'
-                },
-                {
-                  area: 'Area II',
-                  title: 'Penataan Tatalaksana',
-                  desc: 'Peningkatan implementasi Standard Operating Procedure (SOP) tata pamong, integrasi portal e-Kinerja, dan digitalisasi pelayanan publik.',
-                  doc: 'Peta Alur SOP Pelayanan TU.pdf',
-                  size: '1.2 MB'
-                },
-                {
-                  area: 'Area III',
-                  title: 'Penataan Sistem Manajemen SDM',
-                  desc: 'Penerapan rotasi internal berdasarkan kompetensi, penegakan disiplin ASN Kemenag, dan pemberian piagam Reward & Punishment.',
-                  doc: 'SK Mutasi & Prestasi SDM.pdf',
-                  size: '890 KB'
-                },
-                {
-                  area: 'Area IV',
-                  title: 'Penguatan Akuntabilitas',
-                  desc: 'Keterlibatan pimpinan dalam penyusunan RKAS/DIPA Kemenag, pemantauan dashboard kinerja madrasah, dan laporan capaian target.',
-                  doc: 'Laporan Capaian Kinerja DIPA.pdf',
-                  size: '2.1 MB'
-                },
-                {
-                  area: 'Area V',
-                  title: 'Penguatan Pengawasan',
-                  desc: 'Penyediaan sistem pengaduan internal (Whistle Blowing System), saluran pelaporan gratifikasi, dan sosialisasi pencegahan KKN.',
-                  doc: 'Laporan WhistleBlowingSystem.pdf',
-                  size: '610 KB'
-                },
-                {
-                  area: 'Area VI',
-                  title: 'Peningkatan Kualitas Pelayanan Publik',
-                  desc: 'Pengadaan standar pelayanan ramah difabel, kotak saran kepuasan publik, serta ruang tunggu PTSP (Pelayanan Terpadu Satu Pintu) ber-AC.',
-                  doc: 'Hasil Survei Kepuasan Tamu (IKM).pdf',
-                  size: '1.5 MB'
-                }
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white border rounded-xl p-5 hover:border-brand-green/35 shadow-sm transition-all flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
-                    <span className="bg-brand-gold/10 text-brand-green font-mono text-[9px] font-black px-2 py-0.5 rounded border border-brand-gold/20 uppercase">
-                      {item.area}
-                    </span>
-                    <h4 className="font-display font-extrabold text-sm text-[#1E293B]">{item.title}</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed font-sans">{item.desc}</p>
-                  </div>
+          
+          <div className="w-full overflow-x-auto text-[13px] font-sans">
+            <table className="w-full border-collapse border border-slate-200 min-w-[800px]">
+              <thead>
+                <tr className="bg-slate-50 border border-slate-200 text-center font-bold text-slate-700">
+                  <td className="p-2.5 border border-slate-200 w-12">No.</td>
+                  <td className="p-2.5 border border-slate-200">Komponen Pengungkit</td>
+                  <td className="p-2.5 border border-slate-200 w-16">Nilai</td>
+                  <td className="p-2.5 border border-slate-200 w-16">%</td>
+                  <td className="p-2.5 border border-slate-200 w-12">No.</td>
+                  <td className="p-2.5 border border-slate-200">Komponen Hasil</td>
+                  <td className="p-2.5 border border-slate-200 w-16">Nilai</td>
+                  <td className="p-2.5 border border-slate-200 w-20">%</td>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Row 1 */}
+                <tr className="hover:bg-slate-50 transition-colors">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">1</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Manajemen Perubahan (4)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">4</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">100%</td>
                   
-                  <div className="pt-3 border-t border-slate-50 flex items-center justify-between text-[11px]">
-                    <span className="text-slate-400 font-mono italic truncate max-w-[150px]" title={item.doc}>
-                      {item.doc}
-                    </span>
-                    <button 
-                      onClick={() => alert(`Mengunduh berkas bukti "${item.doc}" (${item.size}) untuk Area Pengawasan Zona Integritas secara sukses.`)}
-                      className="text-brand-green font-bold flex items-center gap-1 hover:underline cursor-pointer font-sans"
-                    >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      <span>Unduh Bukti ({item.size})</span>
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">1</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-brand-green/10 text-brand-green border border-brand-green/20 px-2 py-1 rounded shadow-sm font-bold">Birokrasi Bersih Akuntabel (22.5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">18.13</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">80.56%</td>
+                </tr>
+
+                {/* Row 2 */}
+                <tr className="hover:bg-slate-50 transition-colors">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">2</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Penataan Tatalaksana (3.5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">3.5</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">100%</td>
+                  
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">2</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-brand-green/10 text-brand-green border border-brand-green/20 px-2 py-1 rounded shadow-sm font-bold">Pelayanan Publik Prima (17.5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">13.13</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">75%</td>
+                </tr>
+
+                {/* Row 3 */}
+                <tr className="hover:bg-slate-50 transition-colors">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">3</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Penataan Sistem Manajemen Sdm Aparatur (5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">5</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">100%</td>
+                  
+                  <td colSpan={2} className="p-2 border border-slate-200 text-center font-black text-brand-green bg-slate-50 uppercase tracking-wider">TOTAL KOMPONEN HASIL (40)</td>
+                  <td className="p-2 border border-slate-200 text-center font-black text-slate-900 bg-slate-50">31.25</td>
+                  <td className="p-2 border border-slate-200 text-center font-black text-slate-900 bg-slate-50">78.13%</td>
+                </tr>
+
+                {/* Row 4 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">4</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Penguatan Akuntabilitas (5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">5</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">100%</td>
+                  
+                  <td colSpan={4} rowSpan={4} className="p-4 border border-slate-200 text-center align-middle bg-white">
+                    <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-6 mb-6">
+                      <span className="text-xl font-display font-black text-brand-green uppercase tracking-wide">Indeks PMPZI Satuan Kerja</span>
+                      <span className="text-2xl font-black text-brand-gold">79.13</span>
+                    </div>
+                    <button className="bg-brand-gold text-white px-6 py-2.5 rounded shadow-sm hover:bg-yellow-600 transition-colors font-bold tracking-wide">Lihat Penilaian ZI Secara Lengkap</button>
+                  </td>
+                </tr>
+
+                {/* Row 5 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">5</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Penguatan Pengawasan (7.5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">7.5</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">100%</td>
+                </tr>
+
+                {/* Row 6 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">6</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Peningkatan Kualitas Pelayanan Publik (5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">5</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">100%</td>
+                </tr>
+
+                {/* TOTAL ASPEK PEMENUHAN */}
+                <tr className="bg-slate-50">
+                  <td colSpan={2} className="p-2 border border-slate-200 text-center font-black text-brand-green uppercase tracking-wider">TOTAL ASPEK PEMENUHAN (30)</td>
+                  <td className="p-2 border border-slate-200 text-center font-black text-slate-900">30</td>
+                  <td className="p-2 border border-slate-200 text-center font-black text-slate-900">100%</td>
+                </tr>
+
+                {/* Reform 1 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">1</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Manajemen Perubahan (4)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">4</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">100%</td>
+                  
+                  <td colSpan={4} rowSpan={8} className="p-4 border border-slate-200 text-center align-middle bg-white">
+                    <button className="bg-brand-green text-white px-8 py-3 rounded shadow-sm hover:bg-brand-green-light transition-colors text-[14px] font-bold tracking-wide w-full max-w-sm">
+                      Kirim Hasil Penilaian Zona Integritas Ke Menteri Agama
                     </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  </td>
+                </tr>
+
+                {/* Reform 2 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">2</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Penataan Tatalaksana (3.5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">3.5</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">100%</td>
+                </tr>
+
+                {/* Reform 3 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">3</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Penataan Sistem Manajemen Sdm Aparatur (5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">0</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">0%</td>
+                </tr>
+
+                {/* Reform 4 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">4</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Penguatan Akuntabilitas (5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">0</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">0%</td>
+                </tr>
+
+                {/* Reform 5 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">5</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Penguatan Pengawasan (7.5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">6.5</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">86.67%</td>
+                </tr>
+
+                {/* Reform 6 */}
+                <tr className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="p-2 border border-slate-200 text-center text-slate-600">6</td>
+                  <td className="p-2 border border-slate-200">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      <span className="inline-block bg-slate-100 text-slate-700 border border-slate-200 px-2 py-1 rounded shadow-sm font-medium">Peningkatan Kualitas Pelayanan Publik (5)</span>
+                      <span className="inline-block bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-1 rounded font-bold shadow-sm">Ev</span>
+                    </div>
+                  </td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">3.88</td>
+                  <td className="p-2 border border-slate-200 text-center font-medium text-slate-700">77.5%</td>
+                </tr>
+
+                {/* TOTAL ASPEK REFORM */}
+                <tr className="bg-slate-50">
+                  <td colSpan={2} className="p-2 border border-slate-200 text-center font-black text-brand-green uppercase tracking-wider">TOTAL ASPEK REFORM (30)</td>
+                  <td className="p-2 border border-slate-200 text-center font-black text-slate-900">17.88</td>
+                  <td className="p-2 border border-slate-200 text-center font-black text-slate-900">59.58%</td>
+                </tr>
+                
+                {/* TOTAL KOMPONEN PENGUNGKIT */}
+                <tr className="bg-slate-50">
+                  <td colSpan={2} className="p-2 border border-slate-200 text-center font-black text-brand-green uppercase tracking-wider">TOTAL KOMPONEN PENGUNGKIT (60)</td>
+                  <td className="p-2 border border-slate-200 text-center font-black text-slate-900">47.88</td>
+                  <td className="p-2 border border-slate-200 text-center font-black text-slate-900">79.79%</td>
+                </tr>
+
+              </tbody>
+            </table>
           </div>
         </div>
       )}
