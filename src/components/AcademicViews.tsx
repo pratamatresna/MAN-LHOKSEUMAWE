@@ -201,11 +201,12 @@ export default function AcademicViews({ subTab }: AcademicViewsProps) {
                   <GraduationCap className="w-6 h-6 text-brand-gold-dark shrink-0" />
                   <div>
                     <h4 className="font-bold text-xs p-0 text-brand-gold-dark">
-                      Sistem Kredit SKS Akseleratif
+                      Fleksibilitas Masa Studi
                     </h4>
                     <p className="text-[10px] text-slate-600 mt-1">
-                      Memberikan kesempatan lulus 2 tahun bagi siswa dengan
-                      tingkat serapan materi sangat tinggi.
+                      Memberikan ruang fleksibilitas bagi peserta didik
+                      berprestasi akademik luar biasa untuk menyelesaikan masa
+                      pendidikan madrasah.
                     </p>
                   </div>
                 </div>
@@ -231,8 +232,9 @@ export default function AcademicViews({ subTab }: AcademicViewsProps) {
                     Fase F (Kelas XI & XII)
                   </p>
                   <p className="text-[11px] text-slate-500 font-sans">
-                    Pemilihan kelompok mata pelajaran pilihan (Sains-Riset,
-                    Sosial-Wirausaha, Keagamaan-Kitab).
+                    Pemilihan kelompok mata pelajaran pilihan (Matematika
+                    Lanjut, Fisika, Kimia, Biologi, Geografi, Ekonomi, dan
+                    Sosiologi).
                   </p>
                 </div>
               </div>

@@ -52,7 +52,7 @@ export default function Navbar({ currentTab, setTab, subTab }: NavbarProps) {
       hasSub: true,
       subItems: [
         { id: 'kurikulum', label: 'Informasi Kurikulum' },
-        { id: 'roster', label: 'Jadwal Roster Pelajaran' },
+        { id: 'roster', label: 'Mata Pelajaran' },
         { id: 'kalender', label: 'Kalender Akademik' },
         { id: 'ujian', label: 'Jadwal Ujian (CBT)' },
         { id: 'ekstra', label: 'Data Ekstrakurikuler' },
