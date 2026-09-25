@@ -447,14 +447,14 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            <div className="p-3 bg-slate-50 border border-slate-200/50 rounded-xl space-y-1 text-[10px] text-slate-500 font-sans">
+            {/* <div className="p-3 bg-slate-50 border border-slate-200/50 rounded-xl space-y-1 text-[10px] text-slate-500 font-sans">
               <p className="font-bold text-brand-green">🔑 Petunjuk Sandi Peran:</p>
               <ul className="list-disc pl-3 space-y-0.5">
                 <li><strong className="text-slate-700 font-mono">Admin Utama</strong>: sandi <code className="bg-slate-200 px-1 rounded">admin123</code></li>
                 <li><strong className="text-slate-700 font-mono">Staf Humas</strong>: sandi <code className="bg-slate-200 px-1 rounded">adminman</code></li>
                 <li><strong className="text-slate-700 font-mono">OSIM</strong>: sandi <code className="bg-slate-200 px-1 rounded">osim123</code></li>
               </ul>
-            </div>
+            </div> */}
 
             <div className="pt-2">
               <button
